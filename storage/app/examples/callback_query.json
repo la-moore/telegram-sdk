@@ -1,0 +1,49 @@
+{
+  "update_id":247471770,
+  "callback_query":{
+    "id":"2919245963576167928",
+    "from":{
+      "id":679689916,
+      "is_bot":false,
+      "first_name":"Alex",
+      "last_name":"Moore",
+      "username":"moorlex",
+      "language_code":"ru",
+      "is_premium":true
+    },
+    "message":{
+      "message_id":3572,
+      "from":{
+        "id":5871496385,
+        "is_bot":true,
+        "first_name":"LaMoore GPT",
+        "username":"lamoore_bot"
+      },
+      "chat":{
+        "id":679689916,"first_name":"Alex",
+        "last_name":"Moore",
+        "username":"moorlex",
+        "type":"private"
+      },
+      "date":1719249162,
+      "text":"\u0412\u0435\u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043f\u043e\u0441\u043e\u0431 \u043e\u043f\u043b\u0430\u0442\u044b:",
+      "reply_markup":{
+        "inline_keyboard":[
+          [
+            {
+              "text":"Wallet",
+              "callback_data":"action:createCryptoInvoice;tokens:100"
+            }
+          ],
+          [
+            {
+              "text":"Stars",
+              "callback_data":"action:createStarsInvoice;tokens:100"}
+          ]
+        ]
+      }
+    },
+    "chat_instance":"-6085706519694798312",
+    "data":"/test?number=123"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "update_id":247471689,
+  "message":{
+    "message_id":3432,
+    "from":{
+      "id":679689916,
+      "is_bot":false,
+      "first_name":"Alex",
+      "last_name":"Moore",
+      "username":"moorlex",
+      "language_code":"ru",
+      "is_premium":true},
+    "chat":{
+      "id":679689916,
+      "first_name":"Alex",
+      "last_name":"Moore",
+      "username":"moorlex",
+      "type":"private"
+    },
+    "date":1718964632,
+    "text":"\/start",
+    "entities":[
+      {
+        "offset":0,
+        "length":6,
+        "type":"bot_command"
+      }
+    ]
+  }
+}
