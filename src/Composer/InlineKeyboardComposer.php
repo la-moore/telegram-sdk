@@ -32,6 +32,16 @@ class InlineKeyboardComposer extends BaseComposer {
         return $this;
     }
 
+    public function eachButton (callable $cb): static {
+        foreach ($this->inline_keyboard as $row) {
+            foreach ($row as $button) {
+                $cb($button);
+            }
+        }
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         if (isset($this->inline_keyboard)) {

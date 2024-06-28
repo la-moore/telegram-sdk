@@ -84,7 +84,7 @@ class InlineKeyboardButtonComposer extends BaseComposer {
         return $this;
     }
 
-    public function command(string $name, array $data): static {
+    public function command(string $name, array $data = []): static {
         $this->callback_data($name.'?'.http_build_query($data));
 
         return $this;
