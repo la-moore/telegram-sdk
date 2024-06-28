@@ -2,8 +2,7 @@
 
 namespace LaMoore\Tg\Resources;
 
-use Illuminate\Support\Collection;
-use Sunrise\Hydrator\Annotation\Subtype;
+use SergiX44\Hydrator\Annotation\ArrayType;
 
 class MessageResource extends BaseResource
 {
@@ -21,6 +20,6 @@ class MessageResource extends BaseResource
     public ?ReplyParametersResource $reply_parameters = null;
     public ?InlineKeyboardMarkupResource $reply_markup = null;
 
-    #[Subtype(MessageEntityResource::class)]
-    public ?Collection $entities = null;
+    #[ArrayType(MessageEntityResource::class)]
+    public ?array $entities = null;
 }

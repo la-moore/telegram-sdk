@@ -1,12 +1,12 @@
 <?php
 
-namespace LaMoore\Tg\Client;
+namespace LaMoore\Tg\Api;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-trait TelegramInteractions
+trait ApiInteractions
 {
     public function sendRequest(string $method, array $data = []): mixed
     {

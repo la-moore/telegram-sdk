@@ -1,8 +1,8 @@
 <?php
 
-namespace LaMoore\Tg\Client;
+namespace LaMoore\Tg\Api;
 
-trait TelegramWebhooksMethods
+trait ApiWebhooksMethods
 {
     public function setWebhook(array $data): bool
     {

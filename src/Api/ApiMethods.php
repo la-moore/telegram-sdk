@@ -1,15 +1,15 @@
 <?php
 
-namespace LaMoore\Tg\Client;
+namespace LaMoore\Tg\Api;
 
 use LaMoore\Tg\Resources\UserResource;
 use LaMoore\Tg\Resources\BotNameResource;
 use LaMoore\Tg\Resources\BotDescriptionResource;
 use LaMoore\Tg\Resources\BotShortDescriptionResource;
 use LaMoore\Tg\Resources\UserProfilePhotosResource;
-use LaMoore\Tg\Client\DTO\SendMessageDto;
+use LaMoore\Tg\Api\DTO\SendMessageDto;
 
-trait TelegramMethods
+trait ApiMethods
 {
     public function getMe(): UserResource
     {
@@ -56,6 +56,13 @@ trait TelegramMethods
     public function editMessageReplyMarkup(array $data): array
     {
         $data = $this->sendRequest('/editMessageReplyMarkup', $data);
+
+        return $data;
+    }
+
+    public function editMessageText(array $data): array
+    {
+        $data = $this->sendRequest('/editMessageText', $data);
 
         return $data;
     }

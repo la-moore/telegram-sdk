@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \LaMoore\Tg\Resources\UserProfilePhotosResource getUserProfilePhotos(int $user_id, int $offset = 0, int $limit = 100)
  * @method static array sendMessage(array $data)
  * @method static boolean setWebhook(array $data)
- * @method static boolean editMessageReplyMarkup(array $data)
+ * @method static array editMessageReplyMarkup(array $data)
+ * @method static array editMessageText(array $data)
  * @method static array getWebhookInfo()
  */
 class TelegramApi extends Facade

@@ -2,13 +2,13 @@
 
 namespace LaMoore\Tg;
 
-use LaMoore\Tg\Client\TelegramInteractions;
-use LaMoore\Tg\Client\TelegramMethods;
-use LaMoore\Tg\Client\TelegramWebhooksMethods;
+use LaMoore\Tg\Api\ApiInteractions;
+use LaMoore\Tg\Api\ApiMethods;
+use LaMoore\Tg\Api\ApiWebhooksMethods;
 
 class TelegramApi
 {
-    use TelegramInteractions;
-    use TelegramMethods;
-    use TelegramWebhooksMethods;
+    use ApiInteractions;
+    use ApiMethods;
+    use ApiWebhooksMethods;
 }
