@@ -21,7 +21,6 @@ trait ClientCommands
         $commands = $this->request->getCommands();
 
         foreach ($commands as $command) {
-            $this->tryToExecuteListener('command');
             $this->tryToExecuteCommand($command['name'], [ 'message' => $command['parameter'] ]);
         }
     }

@@ -5,16 +5,21 @@ namespace LaMoore\Tg\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \LaMoore\Tg\Resources\UserResource getMe()
- * @method static \LaMoore\Tg\Resources\BotNameResource getMyName()
- * @method static \LaMoore\Tg\Resources\BotDescriptionResource getMyDescription()
- * @method static \LaMoore\Tg\Resources\BotShortDescriptionResource getMyShortDescription()
- * @method static \LaMoore\Tg\Resources\UserProfilePhotosResource getUserProfilePhotos(int $user_id, int $offset = 0, int $limit = 100)
+ * @method static array getMe()
+ * @method static array getMyName()
+ * @method static array getMyDescription()
+ * @method static array getMyShortDescription()
+ * @method static array getUserProfilePhotos(int $user_id, int $offset = 0, int $limit = 100)
  * @method static array sendMessage(array $data)
  * @method static boolean setWebhook(array $data)
  * @method static array editMessageReplyMarkup(array $data)
  * @method static array editMessageText(array $data)
  * @method static array getWebhookInfo()
+ * @method static array sendInvoice(array $data)
+ * @method static array createInvoiceLink(array $data)
+ * @method static array answerShippingQuery(array $data)
+ * @method static array answerPreCheckoutQuery(array $data)
+ * @method static array refundStarPayment(array $data)
  */
 class TelegramApi extends Facade
 {

@@ -8,6 +8,7 @@ use LaMoore\Tg\Facades\TelegramClient;
 use LaMoore\Tg\Tests\TestCase;
 use LaMoore\Tg\Composer\MessageComposer;
 use LaMoore\Tg\Composer\InlineKeyboardComposer;
+use LaMoore\Tg\Enums\UpdateTypes;
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 
 class ResourcesTest extends TestCase
@@ -15,12 +16,12 @@ class ResourcesTest extends TestCase
     public function test_resource_message(): void
     {
         $updateData = json_decode(
-            file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/command.json'),
+            file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/message.json'),
             true
         );
         $response = RequestFake::create('/', 'GET', $updateData);
 
-        TelegramClient::on('update', function (TelegramRequest $request) {
+        TelegramClient::on(UpdateTypes::Update, function (TelegramRequest $request) {
             $keyboard = InlineKeyboardComposer::make()
                 ->row([
                     InlineKeyboardButtonComposer::make()->text('button')->web_app('/...')

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use LaMoore\Tg\Client\ClientCommands;
 use LaMoore\Tg\Client\ClientListeners;
+use LaMoore\Tg\Enums\UpdateTypes;
 
 class TelegramClient {
     use ClientCommands;
@@ -23,7 +24,8 @@ class TelegramClient {
 
         $this->request = TelegramRequest::make($request->all());
 
-        $this->tryToExecuteListener('update');
+        $this->tryToExecuteListener(UpdateTypes::Update);
+        $this->tryToExecuteListener($this->request->getUpdateType());
 
         $this->handleCommands();
         $this->handleCallbackQueryActions();

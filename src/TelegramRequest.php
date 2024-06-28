@@ -38,8 +38,12 @@ class TelegramRequest {
             return UpdateTypes::Command;
         }
 
-        if ($this->update->callback_query) {
-            return UpdateTypes::CallbackQuery;
+        foreach (UpdateTypes::cases() as $case) {
+            $caseValue = $case->value;
+
+            if (isset($this->update->$caseValue)) {
+                return $case;
+            }
         }
 
         return UpdateTypes::Message;

@@ -9,13 +9,13 @@ trait ClientListeners
 {
     static private array $listeners = [];
 
-    public function on(string $event, callable $callback): void
+    public function on(UpdateTypes $event, callable $callback): void
     {
-        if (!isset(self::$listeners[$event])) {
-            self::$listeners[$event] = [];
+        if (!isset(self::$listeners[$event->value])) {
+            self::$listeners[$event->value] = [];
         }
 
-        self::$listeners[$event][] = $callback;
+        self::$listeners[$event->value][] = $callback;
     }
 
     public function clearListeners(): void
@@ -43,10 +43,10 @@ trait ClientListeners
         return isset(self::$listeners[$name]);
     }
 
-    protected function tryToExecuteListener(string $event, mixed $parameter = null): void
+    protected function tryToExecuteListener(UpdateTypes $event, mixed $parameter = null): void
     {
-        if ($this->hasListener($event)) {
-            $listeners = self::$listeners[$event];
+        if ($this->hasListener($event->value)) {
+            $listeners = self::$listeners[$event->value];
 
             foreach ($listeners as $listener) {
                 $listener($this->request, $parameter);

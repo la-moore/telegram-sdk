@@ -2,48 +2,41 @@
 
 namespace LaMoore\Tg\Api;
 
-use LaMoore\Tg\Resources\UserResource;
-use LaMoore\Tg\Resources\BotNameResource;
-use LaMoore\Tg\Resources\BotDescriptionResource;
-use LaMoore\Tg\Resources\BotShortDescriptionResource;
-use LaMoore\Tg\Resources\UserProfilePhotosResource;
-use LaMoore\Tg\Api\DTO\SendMessageDto;
-
 trait ApiMethods
 {
-    public function getMe(): UserResource
+    public function getMe(): array
     {
         $data = $this->sendRequest('/getMe');
 
-        return UserResource::fromArray($data);
+        return $data;
     }
 
-    public function getMyName(): BotNameResource
+    public function getMyName(): array
     {
         $data = $this->sendRequest('/getMyName');
 
-        return BotNameResource::fromArray($data);
+        return $data;
     }
 
-    public function getMyDescription(): BotDescriptionResource
+    public function getMyDescription(): array
     {
         $data = $this->sendRequest('/getMyDescription');
 
-        return BotDescriptionResource::fromArray($data);
+        return $data;
     }
 
-    public function getMyShortDescription(): BotShortDescriptionResource
+    public function getMyShortDescription(): array
     {
         $data = $this->sendRequest('/getMyShortDescription');
 
-        return BotShortDescriptionResource::fromArray($data);
+        return $data;
     }
 
-    public function getUserProfilePhotos(int $user_id, int $offset = 0, int $limit = 100): UserProfilePhotosResource
+    public function getUserProfilePhotos(int $user_id, int $offset = 0, int $limit = 100): array
     {
         $data = $this->sendRequest('/getUserProfilePhotos');
 
-        return UserProfilePhotosResource::fromArray($data);
+        return $data;
     }
 
     public function sendMessage(array $data): array
