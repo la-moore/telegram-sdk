@@ -3,6 +3,7 @@
 namespace LaMoore\Tg\Composer;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use LaMoore\Tg\Resources\BaseResource;
 
 class BaseComposer {
@@ -10,11 +11,13 @@ class BaseComposer {
         return new static();
     }
 
+    public function getParamsCollection(): Collection {
+        return collect(get_object_vars($this));
+    }
+
     public function toArray(): array
     {
-        $data = [...get_object_vars($this)];
-
-        return collect($data)
+        return $this->getParamsCollection()
             ->map(function (mixed $value) {
                 if ($value instanceof Arrayable) {
                     return $value->toArray();

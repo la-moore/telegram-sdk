@@ -2,7 +2,9 @@
 
 namespace LaMoore\Tg\Composer;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use LaMoore\Tg\Resources\BaseResource;
 use LaMoore\Tg\Resources\LinkPreviewOptionsResource;
 use LaMoore\Tg\Resources\MessageEntityResource;
 use LaMoore\Tg\Resources\ReplyParametersResource;
@@ -11,7 +13,7 @@ class InvoiceComposer extends BaseComposer {
     protected int $chat_id;
     protected string $title;
     protected string $description;
-    protected string $payload;
+    protected array $payload;
     protected string $currency;
     protected array $prices = [];
     protected ?int $message_thread_id = null;
@@ -19,7 +21,7 @@ class InvoiceComposer extends BaseComposer {
     protected ?int $max_tip_amount = null;
     protected ?array $suggested_tip_amounts = null;
     protected ?string $start_parameter = null;
-    protected ?string $provider_data = null;
+    protected ?array $provider_data = null;
     protected ?string $photo_url = null;
     protected ?int $photo_size = null;
     protected ?int $photo_width = null;
@@ -44,28 +46,28 @@ class InvoiceComposer extends BaseComposer {
         return $this;
     }
 
-    public function title(int $title): static
+    public function title(string $title): static
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function description(int $description): static
+    public function description(string $description): static
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function payload(int $payload): static
+    public function payload(array $payload): static
     {
         $this->payload = $payload;
 
         return $this;
     }
 
-    public function currency(int $currency): static
+    public function currency(string $currency): static
     {
         $this->currency = $currency;
 
@@ -107,7 +109,7 @@ class InvoiceComposer extends BaseComposer {
         return $this;
     }
 
-    public function provider_data(string $provider_data): static
+    public function provider_data(array $provider_data): static
     {
         $this->provider_data = $provider_data;
 
@@ -229,5 +231,27 @@ class InvoiceComposer extends BaseComposer {
         $this->reply_markup = $keyboard;
 
         return $this;
+    }
+
+
+    public function getParamsCollection(): Collection {
+        $data = collect(get_object_vars($this));
+
+        if ($this->prices) {
+            $prices = collect($this->prices)->map(fn ($price) => $price->toArray());
+            $data['prices'] = json_encode($prices);
+        }
+
+        if ($this->provider_data) {
+            $data['provider_data'] = json_encode($this->provider_data);
+        }
+
+        if ($this->payload) {
+            $data['payload'] = json_encode($this->payload);
+        }
+
+        $data['reply_markup'] = $this->reply_markup?->toJson() ?? null;
+
+        return $data;
     }
 }

@@ -5,6 +5,7 @@ namespace LaMoore\Tg\Request;
 use LaMoore\Tg\Composer\InvoiceComposer;
 use LaMoore\Tg\Composer\PreCheckoutQueryComposer;
 use LaMoore\Tg\Composer\MessageComposer;
+use LaMoore\Tg\Composer\FileComposer;
 use LaMoore\Tg\Facades\TelegramApi;
 
 trait RequestMethods {
@@ -49,5 +50,10 @@ trait RequestMethods {
             ],
             $message->toArray()
         ));
+    }
+
+    public function getFile(FileComposer $message): array
+    {
+        return TelegramApi::editMessageText($message->toArray());
     }
 }

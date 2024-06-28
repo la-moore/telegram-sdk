@@ -6,7 +6,7 @@ trait ClientCommands
 {
     static private array $commands = [];
 
-    public function command(string $command, callable $callback): void
+    public function command(string $command, array|callable $callback): void
     {
         self::$commands[$command] = $callback;
     }

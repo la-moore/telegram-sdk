@@ -59,4 +59,11 @@ trait ApiMethods
 
         return $data;
     }
+
+    public function getFile(array $data): array
+    {
+        $data = $this->sendRequest('/getFile', $data);
+
+        return $data;
+    }
 }

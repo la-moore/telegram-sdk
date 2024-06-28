@@ -19,6 +19,10 @@ class MessageResource extends BaseResource
     public ?string $message_effect_id = null;
     public ?ReplyParametersResource $reply_parameters = null;
     public ?InlineKeyboardMarkupResource $reply_markup = null;
+    public ?MessageResource $reply_to_message = null;
+
+    #[ArrayType(PhotoSizeResource::class)]
+    public ?array $photo = null;
 
     #[ArrayType(MessageEntityResource::class)]
     public ?array $entities = null;

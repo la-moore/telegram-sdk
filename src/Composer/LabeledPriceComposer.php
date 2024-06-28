@@ -3,8 +3,8 @@
 namespace LaMoore\Tg\Composer;
 
 class LabeledPriceComposer extends BaseComposer {
-    public string $label;
-    public int $amount;
+    protected string $label;
+    protected int $amount;
 
     public function label (string $label): static {
         $this->label = $label;
