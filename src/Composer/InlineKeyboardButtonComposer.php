@@ -8,9 +8,9 @@ use LaMoore\Tg\Resources\SwitchInlineQueryChosenChatResource;
 use LaMoore\Tg\Resources\WebAppInfoResource;
 
 class InlineKeyboardButtonComposer extends BaseComposer {
-    protected string $text;
+    public string $text;
+    public ?string $callback_data = null;
     protected ?string $url = null;
-    protected ?string $callback_data = null;
     protected ?WebAppInfoResource $web_app = null;
     protected ?LoginUrlResource $login_url = null;
     protected ?string $switch_inline_query = null;

@@ -39,6 +39,30 @@ class MessageComposer extends BaseComposer {
         return $this;
     }
 
+    public function html(string $text): static
+    {
+        $this->parse_mode = 'HTML';
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function markdown(string $text): static
+    {
+        $this->parse_mode = 'Markdown';
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function markdownV2(string $text): static
+    {
+        $this->parse_mode = 'MarkdownV2';
+        $this->text = $text;
+
+        return $this;
+    }
+
     public function parse_mode(string $parse_mode): static
     {
         $this->parse_mode = $parse_mode;
