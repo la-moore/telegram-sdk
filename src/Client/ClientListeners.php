@@ -27,7 +27,7 @@ trait ClientListeners
         return isset(self::$listeners[$name]);
     }
 
-    protected function emit(UpdateTypes $event, mixed $parameter = null): void
+    public function emit(UpdateTypes $event, mixed $parameter = null): void
     {
         if ($this->hasListener($event->value)) {
             $listeners = self::$listeners[$event->value];
