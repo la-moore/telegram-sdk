@@ -19,7 +19,7 @@ class TelegramClient {
     /**
      * @throws Exception
      */
-    public function handleUpdate(Request $request): string
+    public function handleUpdate(Request $request): void
     {
         Log::info(json_encode($request->all()));
 
@@ -30,8 +30,6 @@ class TelegramClient {
 
         $this->handleCommands();
         $this->handleCallbackQueryActions();
-
-        return true;
     }
 
     protected function handleCommands(): void
