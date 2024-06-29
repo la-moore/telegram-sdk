@@ -26,10 +26,11 @@ class TelegramClient {
         $this->request = TelegramRequest::make($request->all());
 
         $this->emit(UpdateTypes::Update);
-        $this->emit($this->request->getUpdateType());
 
         $this->handleCommands();
         $this->handleCallbackQueryActions();
+
+        $this->emit($this->request->getUpdateType());
     }
 
     protected function handleCommands(): void
