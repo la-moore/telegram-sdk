@@ -22,7 +22,7 @@ trait ClientCommands
         return isset(self::$commands[$name]);
     }
 
-    protected function tryToExecuteCommand(string $command, array $parameter = []): void
+    public function callCommand(string $command, array $parameter = []): void
     {
         if ($this->hasCommand($command)) {
             $callback = self::$commands[$command];

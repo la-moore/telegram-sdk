@@ -38,7 +38,7 @@ class TelegramClient {
         $commands = $this->request->getCommands();
 
         foreach ($commands as $command) {
-            $this->tryToExecuteCommand($command['name'], [ 'message' => $command['parameter'] ]);
+            $this->callCommand($command['name'], [ 'message' => $command['parameter'] ]);
         }
     }
 
@@ -53,7 +53,7 @@ class TelegramClient {
             if ($this->hasCommand($command)) {
                 parse_str($data['query'], $query);
 
-                $this->tryToExecuteCommand((string) $command, $query);
+                $this->callCommand((string) $command, $query);
             }
         }
     }
