@@ -2,6 +2,8 @@
 
 namespace LaMoore\Tg\Client;
 
+use Closure;
+
 trait ClientCommands
 {
     static private array $commands = [];
@@ -16,15 +18,6 @@ trait ClientCommands
         self::$commands = [];
     }
 
-    protected function handleCommands(): void
-    {
-        $commands = $this->request->getCommands();
-
-        foreach ($commands as $command) {
-            $this->tryToExecuteCommand($command['name'], [ 'message' => $command['parameter'] ]);
-        }
-    }
-
     protected function hasCommand(string $name): bool {
         return isset(self::$commands[$name]);
     }
@@ -33,7 +26,16 @@ trait ClientCommands
     {
         if ($this->hasCommand($command)) {
             $callback = self::$commands[$command];
-            $callback($this->request, $parameter);
+
+            if ($callback instanceof Closure) {
+                $callback($this->request, $parameter);
+            } else if (is_array($callback)) {
+                if (class_exists($callback[0])) {
+                    $action = $callback[1];
+
+                    (new $callback[0])->$action($this->request, $parameter);
+                }
+            }
         }
     }
 }

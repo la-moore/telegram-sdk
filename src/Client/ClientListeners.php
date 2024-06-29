@@ -2,7 +2,7 @@
 
 namespace LaMoore\Tg\Client;
 
-use Illuminate\Support\Str;
+use Closure;
 use LaMoore\Tg\Enums\UpdateTypes;
 
 trait ClientListeners
@@ -23,33 +23,25 @@ trait ClientListeners
         self::$listeners = [];
     }
 
-    protected function handleCallbackQueryActions(): void
-    {
-        $updateType = $this->request->getUpdateType();
-
-        if ($updateType === UpdateTypes::CallbackQuery) {
-            $data = parse_url($this->request->update->callback_query->data);
-            $command = Str::of($data['path'])->after('/');
-
-            if ($this->hasCommand($command)) {
-                parse_str($data['query'], $query);
-
-                $this->tryToExecuteCommand((string) $command, $query);
-            }
-        }
-    }
-
     protected function hasListener(string $name): bool {
         return isset(self::$listeners[$name]);
     }
 
-    protected function tryToExecuteListener(UpdateTypes $event, mixed $parameter = null): void
+    protected function emit(UpdateTypes $event, mixed $parameter = null): void
     {
         if ($this->hasListener($event->value)) {
             $listeners = self::$listeners[$event->value];
 
             foreach ($listeners as $listener) {
-                $listener($this->request, $parameter);
+                if ($listener instanceof Closure) {
+                    $listener($this->request, $parameter);
+                } else if (is_array($listener)) {
+                    if (class_exists($listener[0])) {
+                        $action = $listener[1];
+
+                        (new $listener[0])->$action($this->request, $parameter);
+                    }
+                }
             }
         }
     }
