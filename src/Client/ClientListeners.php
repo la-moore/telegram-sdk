@@ -9,7 +9,7 @@ trait ClientListeners
 {
     static private array $listeners = [];
 
-    public function on(UpdateTypes $event, array|callable $callback): void
+    public static function on(UpdateTypes $event, array|callable $callback): void
     {
         if (!isset(self::$listeners[$event->value])) {
             self::$listeners[$event->value] = [];
