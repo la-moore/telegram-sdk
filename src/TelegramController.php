@@ -46,7 +46,7 @@ class TelegramController extends Controller {
     {
         $tpe = 'on_'.$type->value;
 
-        if (is_callable($this->$tpe)) {
+        if (isset($this->$tpe) &&is_callable($this->$tpe)) {
             $this->$tpe($this->request);
         }
     }
