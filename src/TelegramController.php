@@ -36,7 +36,7 @@ class TelegramController extends Controller {
         foreach ($commands as $command) {
             $action = $command['name'];
 
-            if (is_callable($this->$action)) {
+            if (isset($this->$action) && is_callable($this->$action)) {
                 $this->$action($this->request, [ 'message' => $command['parameter'] ]);
             }
         }
