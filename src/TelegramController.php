@@ -36,7 +36,7 @@ class TelegramController extends Controller {
         foreach ($commands as $command) {
             $action = $command['name'];
 
-            if (isset($this->$action) && is_callable($this->$action)) {
+            if (method_exists($this, $action)) {
                 $this->$action($this->request, [ 'message' => $command['parameter'] ]);
             }
         }
@@ -44,10 +44,10 @@ class TelegramController extends Controller {
 
     protected function handleUpdateTypeAction(UpdateTypes $type): void
     {
-        $tpe = 'on_'.$type->value;
+        $type = 'on_'.$type->value;
 
-        if (isset($this->$tpe) &&is_callable($this->$tpe)) {
-            $this->$tpe($this->request);
+        if (method_exists($this, $type)) {
+            $this->$type($this->request);
         }
     }
 
