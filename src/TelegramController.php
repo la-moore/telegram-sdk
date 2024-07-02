@@ -22,11 +22,11 @@ class TelegramController extends Controller {
         $this->request = TelegramRequest::make($request->all());
         $type = $this->request->getUpdateType();
 
+        $this->handleUpdateTypeAction(UpdateTypes::Update);
+
         $this->handleCommands();
         $this->handleCallbackQueryActions();
         $this->handleUpdateTypeAction($type);
-
-        $this->handleUpdateTypeAction(UpdateTypes::Update);
     }
 
     protected function handleCommands(): void
