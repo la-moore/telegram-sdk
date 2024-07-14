@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array answerShippingQuery(array $data)
  * @method static array answerPreCheckoutQuery(array $data)
  * @method static array refundStarPayment(array $data)
+ * @method static array setChatMenuButton(array $data)
  */
 class TelegramApi extends Facade
 {
