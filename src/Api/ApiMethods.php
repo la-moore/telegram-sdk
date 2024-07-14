@@ -66,4 +66,11 @@ trait ApiMethods
 
         return $data;
     }
+
+    public function setChatMenuButton(array $data): array
+    {
+        $data = $this->sendRequest('/setChatMenuButton', $data);
+
+        return $data;
+    }
 }
