@@ -13,4 +13,7 @@ class TelegramApi
     use ApiMethods;
     use ApiPayments;
     use ApiWebhooksMethods;
+
+    public string $base_url;
+    public string $bot_token;
 }
