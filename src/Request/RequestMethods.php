@@ -54,6 +54,6 @@ trait RequestMethods {
 
     public function getFile(FileComposer $message): array
     {
-        return TelegramApi::editMessageText($message->toArray());
+        return TelegramApi::getFile($message->toArray());
     }
 }
