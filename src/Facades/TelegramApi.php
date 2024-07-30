@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array editMessageText(array $data)
  * @method static array getWebhookInfo()
  * @method static array sendInvoice(array $data)
+ * @method static array getFile(array $data)
  * @method static array createInvoiceLink(array $data)
  * @method static array answerShippingQuery(array $data)
  * @method static array answerPreCheckoutQuery(array $data)
