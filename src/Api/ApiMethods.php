@@ -67,7 +67,7 @@ trait ApiMethods
         return $data;
     }
 
-    public function setChatMenuButton(array $data): array
+    public function setChatMenuButton(array $data): bool
     {
         $data = $this->sendRequest('/setChatMenuButton', $data);
 
