@@ -73,4 +73,18 @@ trait ApiMethods
 
         return $data;
     }
+
+    public function setMyCommands(array $data): bool
+    {
+        $data = $this->sendRequest('/setMyCommands', $data);
+
+        return $data;
+    }
+
+    public function getMyCommands(array $data): bool
+    {
+        $data = $this->sendRequest('/getMyCommands', $data);
+
+        return $data;
+    }
 }
