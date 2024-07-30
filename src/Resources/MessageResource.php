@@ -6,8 +6,8 @@ use SergiX44\Hydrator\Annotation\ArrayType;
 
 class MessageResource extends BaseResource
 {
-    public string $text;
     public int $message_id;
+    public ?string $text = null;
     public ?ChatResource $chat = null;
     public ?UserResource $from = null;
     public ?string $business_connection_id = null;
