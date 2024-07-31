@@ -4,6 +4,7 @@ namespace LaMoore\Tg\Enums;
 
 enum UpdateTypes: string
 {
+    case Error = 'error';
     case Update = 'update';
     case Message = 'message';
     case Command = 'command';

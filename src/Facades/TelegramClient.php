@@ -5,15 +5,14 @@ namespace LaMoore\Tg\Facades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use LaMoore\Tg\Enums\UpdateTypes;
-use LaMoore\Tg\TelegramClient as TgClient;
 
 /**
- * @method static TgClient command(string $command, array|callable $callback)
- * @method static TgClient on(UpdateTypes $event, array|callable $callback)
- * @method static TgClient handleUpdate(Request $request)
- * @method static TgClient callCommand(string $command, array $parameter = [])
- * @method static TgClient clearListeners()
- * @method static TgClient clearCommands()
+ * @method static void command(string $command, array|callable $callback)
+ * @method static void on(UpdateTypes $event, array|callable $callback)
+ * @method static void clearListeners()
+ * @method static void clearCommands()
+ * @method static mixed handleUpdate(Request $request)
+ * @method static mixed callCommand(string $command, array $parameter = [])
  */
 class TelegramClient extends Facade
 {

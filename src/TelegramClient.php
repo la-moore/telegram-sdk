@@ -23,14 +23,21 @@ class TelegramClient {
     {
         Log::info(json_encode($request->all()));
 
-        $this->request = TelegramRequest::make($request->all());
+        try {
+            $this->request = TelegramRequest::make($request->all());
 
-        $this->emit(UpdateTypes::Update);
+            $this->emit(UpdateTypes::Update);
 
-        $this->handleCommands();
-        $this->handleCallbackQueryActions();
+            $this->handleCommands();
+            $this->handleCallbackQueryActions();
 
-        $this->emit($this->request->getUpdateType());
+            $this->emit($this->request->getUpdateType());
+        } catch (Exception $exception) {
+            $this->emit(UpdateTypes::Error, $exception);
+
+            throw $exception;
+        }
+
     }
 
     protected function handleCommands(): void

@@ -3,6 +3,7 @@
 namespace LaMoore\Tg\Client;
 
 use Closure;
+use Exception;
 
 trait ClientCommands
 {
@@ -22,20 +23,24 @@ trait ClientCommands
         return isset(self::$commands[$name]);
     }
 
-    public function callCommand(string $command, array $parameter = []): void
+    public function callCommand(string $command, array $parameter = []): mixed
     {
-        if ($this->hasCommand($command)) {
-            $callback = self::$commands[$command];
+        if (!$this->hasCommand($command)) {
+            throw new Exception('Command not found [' . $command, ']');
+        }
 
-            if ($callback instanceof Closure) {
-                $callback($this->request, $parameter);
-            } else if (is_array($callback)) {
-                if (class_exists($callback[0])) {
-                    $action = $callback[1];
+        $callback = self::$commands[$command];
 
-                    (new $callback[0])->$action($this->request, $parameter);
-                }
+        if ($callback instanceof Closure) {
+            return $callback($this->request, $parameter);
+        } else if (is_array($callback)) {
+            if (class_exists($callback[0])) {
+                $action = $callback[1];
+
+                return (new $callback[0])->$action($this->request, $parameter);
             }
         }
+
+        return null;
     }
 }
