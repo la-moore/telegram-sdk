@@ -8,6 +8,7 @@ class MessageResource extends BaseResource
 {
     public int $message_id;
     public ?string $text = null;
+    public ?string $caption = null;
     public ?ChatResource $chat = null;
     public ?UserResource $from = null;
     public ?string $business_connection_id = null;
