@@ -22,7 +22,7 @@ class TelegramRequest {
         return $self;
     }
 
-    public function getMessage(): MessageResource {
+    public function getMessage(): MessageResource | null {
         if ($this->update->callback_query) {
             return $this->update->callback_query?->message;
         }
@@ -31,7 +31,7 @@ class TelegramRequest {
     }
 
     public function getUpdateType(): UpdateTypes {
-        $commands = collect($this->getMessage()->entities ?? [])
+        $commands = collect($this->getMessage()?->entities ?? [])
             ->filter(fn ($entity) => $entity->type === 'bot_command');
 
         if (count($commands) > 0) {
@@ -50,7 +50,7 @@ class TelegramRequest {
     }
 
     public function getCommands(): Collection {
-        return collect($this->getMessage()->entities ?? [])
+        return collect($this->getMessage()?->entities ?? [])
             ->filter(fn ($entity) => $entity->type === 'bot_command')
             ->map(function (MessageEntityResource $command) {
                 $text = Str::of($this->getMessage()->text);
