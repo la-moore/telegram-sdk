@@ -3,8 +3,6 @@
 namespace LaMoore\Tg;
 
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LaMoore\Tg\Client\ClientCommands;
 use LaMoore\Tg\Client\ClientListeners;
@@ -14,47 +12,69 @@ class TelegramClient {
     use ClientCommands;
     use ClientListeners;
 
-    public TelegramRequest $request;
+    public TelegramUpdate $update;
+    public TelegramBot $bot;
+
+    public bool $debug;
+    public string $token;
+
+    public function __construct(array $config)
+    {
+        $this->debug = $config['debug'] ?? true;
+        $this->token = $config['token'] ?? '';
+    }
+
+    public function getToken() {
+        return $this->token;
+    }
+
+    public function onUpdate(callable $callback): void
+    {
+        $this->on(UpdateTypes::Update, $callback);
+    }
+
+    public function onMessage(callable $callback): void{
+        $this->on(UpdateTypes::Message, $callback);
+    }
+
+    public function onCommand(string $command, callable $callback): void{
+        $this->command($command, $callback);
+    }
 
     /**
      * @throws Exception
      */
-    public function handleUpdate(Request $request): void
+    public function handleUpdate(array $update): void
     {
-        Log::info(json_encode($request->all()));
-
         try {
-            $this->request = TelegramRequest::make($request->all());
+            $this->update = TelegramUpdate::make($update);
+            $this->bot = TelegramBot::make($this->update);
 
             $this->emit(UpdateTypes::Update);
 
-            $this->handleCommands();
-            $this->handleCallbackQueryActions();
-
-            $this->emit($this->request->getUpdateType());
+            $this->emit($this->update->getType());
         } catch (Exception $exception) {
             $this->emit(UpdateTypes::Error, $exception);
 
             throw $exception;
         }
-
     }
 
-    protected function handleCommands(): void
+    public function handleCommands(): void
     {
-        $commands = $this->request->getCommands();
+        $commands = $this->update->getCommands();
 
         foreach ($commands as $command) {
             $this->callCommand($command['name'], [ 'message' => $command['parameter'] ]);
         }
     }
 
-    protected function handleCallbackQueryActions(): void
+    public function handleActions(): void
     {
-        $updateType = $this->request->getUpdateType();
+        $updateType = $this->update->getType();
 
         if ($updateType === UpdateTypes::CallbackQuery) {
-            $data = parse_url($this->request->update->callback_query->data);
+            $data = parse_url($this->update->update->callback_query->data);
             $command = Str::of($data['path'])->after('/');
 
             if ($this->hasCommand($command)) {

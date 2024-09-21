@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use LaMoore\Tg\Enums\UpdateTypes;
 
 class TelegramController extends Controller {
-    public TelegramRequest $request;
+    public TelegramUpdate $request;
 
     /**
      * @throws Exception
@@ -19,8 +19,8 @@ class TelegramController extends Controller {
     {
         Log::info(json_encode($request->all()));
 
-        $this->request = TelegramRequest::make($request->all());
-        $type = $this->request->getUpdateType();
+        $this->request = TelegramUpdate::make($request->all());
+        $type = $this->request->getType();
 
         $this->handleUpdateTypeAction(UpdateTypes::Update);
 
@@ -53,7 +53,7 @@ class TelegramController extends Controller {
 
     protected function handleCallbackQueryActions(): void
     {
-        $updateType = $this->request->getUpdateType();
+        $updateType = $this->request->getType();
 
         if ($updateType === UpdateTypes::CallbackQuery) {
             $data = parse_url($this->request->update->callback_query->data);

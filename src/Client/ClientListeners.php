@@ -9,7 +9,7 @@ trait ClientListeners
 {
     static private array $listeners = [];
 
-    public static function on(UpdateTypes $event, array|callable $callback): void
+    public static function on(UpdateTypes $event, callable $callback): void
     {
         if (!isset(self::$listeners[$event->value])) {
             self::$listeners[$event->value] = [];
@@ -18,9 +18,14 @@ trait ClientListeners
         self::$listeners[$event->value][] = $callback;
     }
 
-    public function clearListeners(): void
+    public static function clearListeners(UpdateTypes $event = null): void
     {
-        self::$listeners = [];
+        if ($event === null) {
+            self::$listeners = [];
+            return;
+        }
+
+        unset(self::$listeners[$event->value]);
     }
 
     protected function hasListener(string $name): bool {
@@ -33,15 +38,7 @@ trait ClientListeners
             $listeners = self::$listeners[$event->value];
 
             foreach ($listeners as $listener) {
-                if ($listener instanceof Closure) {
-                    $listener($this->request, $parameter);
-                } else if (is_array($listener)) {
-                    if (class_exists($listener[0])) {
-                        $action = $listener[1];
-
-                        (new $listener[0])->$action($this->request, $parameter);
-                    }
-                }
+                $listener($this->update, $parameter);
             }
         }
     }

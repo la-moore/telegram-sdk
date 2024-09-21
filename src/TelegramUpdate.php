@@ -5,14 +5,13 @@ namespace LaMoore\Tg;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use LaMoore\Tg\Enums\UpdateTypes;
-use LaMoore\Tg\Request\RequestMethods;
 use LaMoore\Tg\Resources\MessageEntityResource;
 use LaMoore\Tg\Resources\MessageResource;
+use LaMoore\Tg\Resources\UserResource;
 use LaMoore\Tg\Resources\UpdateResource;
 
-class TelegramRequest {
+class TelegramUpdate {
     public UpdateResource $update;
-    use RequestMethods;
 
     public static function make(array $update): static {
         $self = new static();
@@ -23,14 +22,16 @@ class TelegramRequest {
     }
 
     public function getMessage(): MessageResource | null {
-        if ($this->update->callback_query) {
-            return $this->update->callback_query?->message;
-        }
-
-        return $this->update->message;
+        return $this->update->message ?? null;
     }
 
-    public function getUpdateType(): UpdateTypes {
+    public function getFrom(): UserResource | null {
+        $type = $this->getType()->value;
+
+        return $this->update->$type?->from ?? null;
+    }
+
+    public function getType(): UpdateTypes {
         $commands = collect($this->getMessage()?->entities ?? [])
             ->filter(fn ($entity) => $entity->type === 'bot_command');
 
