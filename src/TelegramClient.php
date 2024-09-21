@@ -13,7 +13,6 @@ class TelegramClient {
     use ClientListeners;
 
     public TelegramUpdate $update;
-    public TelegramBot $bot;
 
     public bool $debug;
     public string $token;
@@ -41,6 +40,7 @@ class TelegramClient {
         $this->command($command, $callback);
     }
 
+
     /**
      * @throws Exception
      */
@@ -48,7 +48,6 @@ class TelegramClient {
     {
         try {
             $this->update = TelegramUpdate::make($update);
-            $this->bot = TelegramBot::make($this->update);
 
             $this->emit(UpdateTypes::Update);
 

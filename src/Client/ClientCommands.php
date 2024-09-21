@@ -31,6 +31,6 @@ trait ClientCommands
 
         $callback = self::$commands[$command];
 
-        return $callback($this->update, $parameter);
+        return $callback($this, $parameter);
     }
 }
