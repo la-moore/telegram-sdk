@@ -32,12 +32,12 @@ class TelegramUpdate {
     }
 
     public function getType(): UpdateTypes {
-        $commands = collect($this->getMessage()?->entities ?? [])
-            ->filter(fn ($entity) => $entity->type === 'bot_command');
-
-        if (count($commands) > 0) {
-            return UpdateTypes::Command;
-        }
+//        $commands = collect($this->getMessage()?->entities ?? [])
+//            ->filter(fn ($entity) => $entity->type === 'bot_command');
+//
+//        if (count($commands) > 0) {
+//            return UpdateTypes::Command;
+//        }
 
         foreach (UpdateTypes::cases() as $case) {
             $caseValue = $case->value;
