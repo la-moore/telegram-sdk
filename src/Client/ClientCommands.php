@@ -25,7 +25,7 @@ trait ClientCommands
     public function callCommand(string $command, array $parameter = []): mixed
     {
         if (!$this->hasCommand($command)) {
-            throw new Exception('Command not found [' . $command, ']');
+            throw new Exception('Command not found [' . $command . ']');
         }
 
         $callback = self::$commands[$command];
