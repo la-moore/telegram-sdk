@@ -28,7 +28,7 @@ trait ClientListeners
         unset(self::$listeners[$event->value]);
     }
 
-    protected function hasListener(string $name): bool {
+    public static function hasListener(string $name): bool {
         return isset(self::$listeners[$name]);
     }
 

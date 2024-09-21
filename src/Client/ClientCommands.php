@@ -18,7 +18,7 @@ trait ClientCommands
         self::$commands = [];
     }
 
-    protected function hasCommand(string $name): bool {
+    public static function hasCommand(string $name): bool {
         return isset(self::$commands[$name]);
     }
 
