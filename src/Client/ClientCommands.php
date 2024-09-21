@@ -2,7 +2,6 @@
 
 namespace LaMoore\Tg\Client;
 
-use Closure;
 use Exception;
 
 trait ClientCommands
@@ -31,6 +30,6 @@ trait ClientCommands
 
         $callback = self::$commands[$command];
 
-        return $callback($this, $parameter);
+        return $callback($this->update, $parameter);
     }
 }

@@ -44,11 +44,14 @@ class TelegramClient {
     /**
      * @throws Exception
      */
-    public function handleUpdate(array $update): void
+    public function update(array $update): void
+    {
+        $this->update = TelegramUpdate::make($update);
+    }
+
+    public function handleUpdate(): void
     {
         try {
-            $this->update = TelegramUpdate::make($update);
-
             $this->emit(UpdateTypes::Update);
 
             $this->emit($this->update->getType());

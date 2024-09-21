@@ -38,7 +38,7 @@ trait ClientListeners
             $listeners = self::$listeners[$event->value];
 
             foreach ($listeners as $listener) {
-                $listener($this, $parameter);
+                $listener($this->update, $parameter);
             }
         }
     }
