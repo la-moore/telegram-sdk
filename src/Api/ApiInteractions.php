@@ -16,7 +16,7 @@ trait ApiInteractions
             'timeout'  => 3
         ]);
 
-        $response = $client->request('POST', $method, $data);
+        $response = $client->request('POST', $method, [ "form_params" => $data ]);
         $response = json_decode($response->getBody(), true);
 
         if (!$response['ok']) {
