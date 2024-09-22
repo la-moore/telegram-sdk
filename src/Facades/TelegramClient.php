@@ -15,6 +15,7 @@ use LaMoore\Tg\Enums\UpdateTypes;
  * @method static mixed handleCommands()
  * @method static mixed handleActions()
  * @method static mixed callCommand(string $command, array $parameter = [])
+ * @method static string getToken()
  */
 class TelegramClient extends Facade
 {
