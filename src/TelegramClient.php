@@ -71,7 +71,7 @@ class TelegramClient {
         }
     }
 
-    public function handleActions(): void
+    public function handleCallbackQuery(): void
     {
         $updateType = $this->update->getType();
 

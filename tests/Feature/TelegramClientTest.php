@@ -90,8 +90,9 @@ class TelegramClientTest extends TestCase
             $this->assertTrue(true);
         });
 
-        $this->client->handleUpdate($update);
-        $this->client->handleActions();
+        $this->client->handle($update);
+        $this->client->handleUpdate();
+        $this->client->handleCallbackQuery();
 
         TelegramClient::clearListeners();
         TelegramClient::clearCommands();
