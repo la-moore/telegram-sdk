@@ -3,21 +3,21 @@
 namespace LaMoore\Tg\Api;
 
 use Exception;
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 trait ApiInteractions
 {
     public function sendRequest(string $method, array $data = []): mixed
     {
-        $request = Http::asJson();
+        $baseUrl = Str::of($this->base_url)->append('bot', $this->bot_token, '/');
+        $client = new Client([
+            'base_uri' => (string) $baseUrl,
+            'timeout'  => 3
+        ]);
 
-        $baseUrl = Str::of($this->base_url)->append('bot', $this->bot_token);
-
-        $request = $request->baseUrl($baseUrl)
-            ->timeout(30);
-
-        $response = $request->post($method, $data)->json();
+        $response = $client->request('POST', $method, $data);
+        $response = json_decode($response->getBody(), true);
 
         if (!$response['ok']) {
             throw new Exception($response['description'], $response['error_code']);

@@ -1,18 +1,26 @@
 <?php
 
-namespace Tests\Feature;
+namespace LaMoore\Tg\Tests\Feature;
 
-use Illuminate\Support\Facades\Request as RequestFake;
-use LaMoore\Tg\Facades\TelegramBot;
-use LaMoore\Tg\Facades\TelegramApi;
+use LaMoore\Tg\TelegramApi;
 use LaMoore\Tg\Tests\TestCase;
 
 class TelegramApiTest extends TestCase
 {
+    protected TelegramApi $api;
+
+    public function setUp(): void
+    {
+        $this->api = new TelegramApi([
+            'debug' => true,
+            'token' => env('TG_BOT_TOKEN'),
+        ]);
+    }
+
     public function test_getMyName(): void
     {
-//        $response = TelegramApi::getMyName();
-//        $this->assertEquals('Community Bots', $response->name);
-        $this->assertTrue(true);
+        $response = $this->api->getMyName();
+
+        $this->assertNotEmpty($response);
     }
 }

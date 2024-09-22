@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature;
+namespace LaMoore\Tg\Tests\Feature;
 
 use LaMoore\Tg\TelegramClient;
 use LaMoore\Tg\Tests\TestCase;

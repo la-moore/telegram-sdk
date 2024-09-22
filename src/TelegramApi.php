@@ -17,7 +17,7 @@ class TelegramApi
     {
         $this->debug = $config['debug'] ?? true;
         $this->bot_token = $config['token'] ?? '';
-        $this->base_url = $config['api_url'] ?? 'https://api.telegram.org';
+        $this->base_url = $config['api_url'] ?? 'https://api.telegram.org/';
     }
 
     use ApiInteractions;
