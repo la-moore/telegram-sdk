@@ -1,6 +1,6 @@
 <?php
 
-namespace LaMoore\Tg\Facades;
+namespace LaMoore\Tg\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -29,6 +29,6 @@ class TelegramApi extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'telegram-api';
+        return TelegramApi::class;
     }
 }

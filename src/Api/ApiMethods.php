@@ -81,7 +81,7 @@ trait ApiMethods
         return $data;
     }
 
-    public function getMyCommands(array $data): bool
+    public function getMyCommands(array $data = []): array
     {
         $data = $this->sendRequest('getMyCommands', $data);
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace LaMoore\Tg\Console\Commands;
+namespace LaMoore\Tg\Laravel\Console\Commands;
 
 use Illuminate\Console\Command;
-use LaMoore\Tg\Facades\TelegramApi;
+use LaMoore\Tg\Laravel\Facades\TelegramApi;
 
 class SetWebhook extends Command
 {

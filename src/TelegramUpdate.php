@@ -8,12 +8,13 @@ use LaMoore\Tg\Enums\UpdateTypes;
 use LaMoore\Tg\Resources\MessageEntityResource;
 use LaMoore\Tg\Resources\MessageResource;
 use LaMoore\Tg\Resources\UserResource;
+use LaMoore\Tg\Resources\ChatResource;
 use LaMoore\Tg\Resources\UpdateResource;
 
 class TelegramUpdate {
-    public UpdateResource $update;
+    protected UpdateResource $update;
 
-    public static function make(array $update): static {
+    public static function create(array $update): static {
         $self = new static();
 
         $self->update = UpdateResource::make($update);
@@ -21,8 +22,18 @@ class TelegramUpdate {
         return $self;
     }
 
+    public function getRaw(): array{
+        return $this->update->toArray();
+    }
+
     public function getMessage(): MessageResource | null {
         return $this->update->message ?? null;
+    }
+
+    public function getChat(): ChatResource | null {
+        $type = $this->getType()->value;
+
+        return $this->update->$type->chat ?? null;
     }
 
     public function getFrom(): UserResource | null {

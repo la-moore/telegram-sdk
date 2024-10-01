@@ -1,26 +1,29 @@
 <?php
 
-namespace LaMoore\Tg\Facades;
+namespace LaMoore\Tg\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use LaMoore\Tg\Enums\UpdateTypes;
+use LaMoore\Tg\TelegramApi;
+use LaMoore\Tg\TelegramUpdate;
+use LaMoore\Tg\Chat\TelegramChat;
 
 /**
+ * @param string $token
+ * @param int $id
+ * @param TelegramApi $api
+ * @param TelegramUpdate $update
+ * @param TelegramChat $chat
  * @method static void command(string $command, array|callable $callback)
  * @method static void on(UpdateTypes $event, array|callable $callback)
  * @method static void clearListeners()
  * @method static void clearCommands()
- * @method static mixed update(array $request)
- * @method static mixed handleUpdate()
- * @method static mixed handleCommands()
- * @method static mixed handleCallbackQuery()
- * @method static mixed callCommand(string $command, array $parameter = [])
- * @method static string getToken()
+ * @method static mixed handle(array $request)
  */
-class TelegramClient extends Facade
+class TelegramBot extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'telegram-client';
+        return TelegramBot::class;
     }
 }

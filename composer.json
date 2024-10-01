@@ -9,7 +9,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "LaMoore\\Tg\\": "src/"
+            "LaMoore\\Tg\\": "src/",
+            "LaMoore\\Tg\\Laravel\\": "laravel/"
         }
     },
     "autoload-dev": {
@@ -31,7 +32,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaMoore\\Tg\\TelegramServiceProvider"
+                "LaMoore\\Tg\\Laravel\\TelegramServiceProvider"
             ],
             "aliases": {
                 "Telegram": "TelegramBot"

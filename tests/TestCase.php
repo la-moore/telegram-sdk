@@ -2,7 +2,7 @@
 
 namespace LaMoore\Tg\Tests;
 
-use LaMoore\Tg\TelegramServiceProvider;
+use LaMoore\Tg\Laravel\TelegramServiceProvider;
 use Orchestra\Testbench\TestCase as BaseCase;
 
 class TestCase extends BaseCase

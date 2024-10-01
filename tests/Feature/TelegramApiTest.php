@@ -2,49 +2,59 @@
 
 namespace LaMoore\Tg\Tests\Feature;
 
-use LaMoore\Tg\TelegramApi;
+use LaMoore\Tg\Fakes\TelegramApiFake;
 use LaMoore\Tg\Tests\TestCase;
-use LaMoore\Tg\Composer\MessageComposer;
-use LaMoore\Tg\Composer\InlineKeyboardComposer;
-use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 
 class TelegramApiTest extends TestCase
 {
-    protected TelegramApi $api;
+    protected TelegramApiFake $api;
 
     public function setUp(): void
     {
-        $this->api = new TelegramApi([
+        $this->api = TelegramApiFake::create(env('TG_BOT_TOKEN'), [
             'debug' => true,
-            'token' => env('TG_BOT_TOKEN'),
         ]);
+
+        $botData = [
+            'id' => 1122334455,
+            'is_bot' => 1,
+            'first_name' => 'Bot',
+            'username' => 'test_bot',
+            'can_join_groups' => 1,
+            'can_read_all_group_messages' => null,
+            'supports_inline_queries' => null,
+            'can_connect_to_business' => null,
+            'has_main_web_app' => null,
+        ];
+
+        $this->api->mock('getMe', function () use ($botData) {
+            return [
+                'ok' => true,
+                'result' => $botData
+            ];
+        });
+
+        $this->api->mock('getMyName', function () use ($botData) {
+            return [
+                'ok' => true,
+                'result' => [
+                    'name' => $botData['first_name']
+                ]
+            ];
+        });
+    }
+
+    public function test_getMe(): void
+    {
+        $response = $this->api->getMe();
+
+        $this->assertEquals(1122334455, $response['id']);
     }
 
     public function test_getMyName(): void
     {
         $response = $this->api->getMyName();
 
-        $this->assertNotEmpty($response);
-    }
-
-    public function test_sendMessage(): void
-    {
-        $msg = MessageComposer::make()
-            ->text("Test message")
-            ->keyboard(
-                InlineKeyboardComposer::make()
-                    ->buttons([
-                        InlineKeyboardButtonComposer::make()
-                            ->text('Открыть')
-                            ->command('set_store_feed'),
-                    ])
-            );
-
-        $response = $this->api->sendMessage(array_merge(
-            ['chat_id' => 679689916],
-            $msg->toArray()
-        ));
-
-        $this->assertNotEmpty($response);
+        $this->assertEquals('Bot', $response['name']);
     }
 }

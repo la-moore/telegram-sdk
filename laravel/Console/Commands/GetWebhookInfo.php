@@ -1,10 +1,9 @@
 <?php
 
-namespace LaMoore\Tg\Console\Commands;
+namespace LaMoore\Tg\Laravel\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Config;
-use LaMoore\Tg\Facades\TelegramApi;
+use LaMoore\Tg\Laravel\Facades\TelegramApi;
 
 class GetWebhookInfo extends Command
 {
