@@ -39,7 +39,9 @@ class BotCommands
             throw new Exception("Command not found [$command]");
         }
 
+        $this->bot->logger->log("Start command: $command");
         $callback = $this->commands[$command];
+        $this->bot->logger->log("Finish command: $command");
 
         return $callback($this->bot, $parameter);
     }
@@ -49,6 +51,7 @@ class BotCommands
         $commands = $this->bot->update->getCommands();
 
         foreach ($commands as $command) {
+            $this->bot->logger->log("Handle command: $command");
             $this->callCommand($command['name'], [ 'message' => $command['parameter'] ]);
         }
     }
@@ -59,13 +62,12 @@ class BotCommands
 
         if ($updateType === UpdateTypes::CallbackQuery) {
             $data = parse_url($this->bot->update->data->callback_query->data);
-            $command = Str::of($data['path'])->after('/');
+            $command = (string) Str::of($data['path'])->after('/');
 
-            if ($this->hasCommand($command)) {
-                parse_str($data['query'], $query);
+            parse_str($data['query'], $query);
 
-                $this->callCommand((string) $command, $query);
-            }
+            $this->bot->logger->log("Handle callback query action: $command");
+            $this->callCommand($command, $query);
         }
     }
 }
