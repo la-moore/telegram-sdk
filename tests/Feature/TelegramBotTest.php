@@ -58,7 +58,7 @@ class TelegramBotTest extends TestCase
         ]);
 
         $this->assertEquals($apiUrl, $bot->api->base_url);
-        $this->assertTrue($bot->api->debug);
+        $this->assertTrue($bot->config['debug']);
     }
 
     public function test_api_getMe(): void

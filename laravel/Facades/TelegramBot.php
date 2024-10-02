@@ -5,11 +5,11 @@ namespace LaMoore\Tg\Laravel\Facades;
 use Illuminate\Support\Facades\Facade;
 use LaMoore\Tg\BotModules\BotCommands;
 use LaMoore\Tg\BotModules\BotEvents;
-use LaMoore\Tg\BotModules\BotLogger;
+use LaMoore\Tg\Chat\TelegramChat;
 use LaMoore\Tg\Enums\UpdateTypes;
+use LaMoore\Tg\Logger\BotLogger;
 use LaMoore\Tg\TelegramApi;
 use LaMoore\Tg\TelegramUpdate;
-use LaMoore\Tg\Chat\TelegramChat;
 
 /**
  * @param string $token

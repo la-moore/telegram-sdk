@@ -2,6 +2,7 @@
 
 namespace LaMoore\Tg\Fakes;
 
+use LaMoore\Tg\Logger\BotLogger;
 use LaMoore\Tg\TelegramBot;
 
 class TelegramBotFake extends TelegramBot {
@@ -16,6 +17,8 @@ class TelegramBotFake extends TelegramBot {
             'api_url' => $config['api_url'] ?? 'https://api.telegram.org/',
         ]);
 
+        $logger = $config['logger'] ?? BotLogger::class;
+        $self->logger = new $logger($self);
         $self->logger->log("Bot $self->id initialized");
 
         return $self;

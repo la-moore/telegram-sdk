@@ -7,10 +7,11 @@ use LaMoore\Tg\Laravel\Console\Commands\GetWebhookInfo;
 use LaMoore\Tg\Laravel\Console\Commands\SetCommands;
 use LaMoore\Tg\Laravel\Console\Commands\SetMenuButton;
 use LaMoore\Tg\Laravel\Console\Commands\SetWebhook;
-use LaMoore\Tg\TelegramBot;
-use LaMoore\Tg\TelegramApi;
 use LaMoore\Tg\Laravel\Facades\TelegramApi as TelegramApiFacade;
 use LaMoore\Tg\Laravel\Facades\TelegramBot as TelegramBotFacade;
+use LaMoore\Tg\Laravel\Logger\LaravelBotLogger;
+use LaMoore\Tg\TelegramApi;
+use LaMoore\Tg\TelegramBot;
 
 class TelegramServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,10 @@ class TelegramServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/telegram.php', 'telegram');
 
-        $this->app->bind(TelegramBotFacade::class, fn () => TelegramBot::create(config('telegram.bot_token')));
+        $this->app->bind(TelegramBotFacade::class, fn () => TelegramBot::create(config('telegram.bot_token'), [
+            'debug' => config('telegram.debug'),
+            'logger' => config('telegram.logger', LaravelBotLogger::class),
+        ]));
         $this->app->bind(TelegramApiFacade::class, fn () => TelegramApi::create(config('telegram.bot_token'), [
             'debug' => config('telegram.debug'),
             'api_url' => config('telegram.api_url'),

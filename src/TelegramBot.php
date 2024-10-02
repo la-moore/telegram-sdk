@@ -4,9 +4,10 @@ namespace LaMoore\Tg;
 
 use LaMoore\Tg\BotModules\BotCommands;
 use LaMoore\Tg\BotModules\BotEvents;
-use LaMoore\Tg\BotModules\BotLogger;
 use LaMoore\Tg\Chat\TelegramChat;
 use LaMoore\Tg\Enums\UpdateTypes;
+use LaMoore\Tg\Logger\BotLogger;
+use LaMoore\Tg\Logger\LoggerInterface;
 
 class TelegramBot {
     public string $token;
@@ -15,14 +16,13 @@ class TelegramBot {
 
     public BotCommands $commands;
     public BotEvents $events;
-    public BotLogger $logger;
+    public LoggerInterface $logger;
 
     public TelegramApi $api;
     public TelegramUpdate $update;
     public ?TelegramChat $chat;
 
     public function __construct() {
-        $this->logger = new BotLogger($this);
         $this->commands = new BotCommands($this);
         $this->events = new BotEvents($this);
     }
@@ -39,6 +39,8 @@ class TelegramBot {
             'api_url' => $config['api_url'] ?? 'https://api.telegram.org/',
         ]);
 
+        $logger = $config['logger'] ?? BotLogger::class;
+        $self->logger = new $logger($self);
         $self->logger->log("Bot $self->id initialized");
 
         return $self;

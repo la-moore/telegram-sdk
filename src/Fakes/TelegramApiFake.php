@@ -12,7 +12,6 @@ class TelegramApiFake extends TelegramApi {
         $api = new static();
 
         $api->bot_token = $token;
-        $api->debug = $config['debug'] ?? true;
         $api->base_url = $config['api_url'] ?? 'https://api.telegram.org/';
 
         return $api;

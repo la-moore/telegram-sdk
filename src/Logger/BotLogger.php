@@ -1,12 +1,12 @@
 <?php
 
-namespace LaMoore\Tg\BotModules;
+namespace LaMoore\Tg\Logger;
 
 use LaMoore\Tg\TelegramBot;
 
-class BotLogger
+class BotLogger implements LoggerInterface
 {
-    private TelegramBot $bot;
+    protected TelegramBot $bot;
 
     public function __construct(TelegramBot $bot) {
         $this->bot = $bot;
