@@ -3,7 +3,9 @@
 namespace LaMoore\Tg\BotModules;
 
 use Exception;
+use Illuminate\Support\Str;
 use LaMoore\Tg\TelegramBot;
+use LaMoore\Tg\Enums\UpdateTypes;
 
 class BotCommands
 {
@@ -48,6 +50,22 @@ class BotCommands
 
         foreach ($commands as $command) {
             $this->callCommand($command['name'], [ 'message' => $command['parameter'] ]);
+        }
+    }
+
+    protected function handleCallbackQueryActions(): void
+    {
+        $updateType = $this->bot->update->getType();
+
+        if ($updateType === UpdateTypes::CallbackQuery) {
+            $data = parse_url($this->bot->update->data->callback_query->data);
+            $command = Str::of($data['path'])->after('/');
+
+            if ($this->hasCommand($command)) {
+                parse_str($data['query'], $query);
+
+                $this->callCommand((string) $command, $query);
+            }
         }
     }
 }

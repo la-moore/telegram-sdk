@@ -12,18 +12,18 @@ use LaMoore\Tg\Resources\ChatResource;
 use LaMoore\Tg\Resources\UpdateResource;
 
 class TelegramUpdate {
-    protected UpdateResource $update;
+    public UpdateResource $data;
 
     public static function create(array $update): static {
         $self = new static();
 
-        $self->update = UpdateResource::make($update);
+        $self->data = UpdateResource::make($update);
 
         return $self;
     }
 
     public function getRaw(): array{
-        return $this->update->toArray();
+        return $this->data->toArray();
     }
 
     public function getMessage(): MessageResource | null {
