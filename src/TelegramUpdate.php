@@ -27,9 +27,7 @@ class TelegramUpdate {
     }
 
     public function getMessage(): MessageResource | null {
-        $type = $this->getType()->value;
-
-        return $this->update->message ?? $this->update->$type->message ?? null;
+        return $this->update->message ?? null;
     }
 
     public function getChat(): ChatResource | null {
