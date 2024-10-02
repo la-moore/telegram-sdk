@@ -27,19 +27,21 @@ class TelegramUpdate {
     }
 
     public function getMessage(): MessageResource | null {
-        return $this->update->message ?? null;
+        $type = $this->getType()->value;
+
+        return $this->data->message ?? $this->data->$type->message ?? null;
     }
 
     public function getChat(): ChatResource | null {
         $type = $this->getType()->value;
 
-        return $this->update->$type->chat ?? null;
+        return $this->data->$type->chat ?? null;
     }
 
     public function getFrom(): UserResource | null {
         $type = $this->getType()->value;
 
-        return $this->update->$type?->from ?? null;
+        return $this->data->$type?->from ?? null;
     }
 
     public function getType(): UpdateTypes {

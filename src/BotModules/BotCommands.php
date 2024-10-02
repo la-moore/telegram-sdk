@@ -51,9 +51,12 @@ class BotCommands
         $this->bot->logger->log("Handle commands");
         $commands = $this->bot->update->getCommands();
 
-        foreach ($commands as $command) {
+        foreach ($commands as $item) {
+            $command = $item['name'];
+            $parameter = $item['parameter'] ?? null;
+
             $this->bot->logger->log("Handle command: $command");
-            $this->callCommand($command['name'], [ 'message' => $command['parameter'] ]);
+            $this->callCommand($command, [ 'message' => $parameter ]);
         }
     }
 
