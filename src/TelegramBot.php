@@ -27,6 +27,7 @@ class TelegramBot {
         $this->events = new BotEvents($this);
     }
 
+
     static function create(string $token, array $config = []): static
     {
         $self = new static();
@@ -58,7 +59,8 @@ class TelegramBot {
         $this->commands->handleCommands();
     }
 
-    public function handleCommand(string $command, callable $callback): void
+
+    public function command(string $command, callable $callback): void
     {
         $this->commands->command($command, $callback);
     }

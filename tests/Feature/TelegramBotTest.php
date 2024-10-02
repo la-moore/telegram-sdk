@@ -82,7 +82,7 @@ class TelegramBotTest extends TestCase
             true
         );
 
-        $this->bot->handleCommand('start', function () {
+        $this->bot->command('start', function () {
             $this->assertTrue(true);
         });
 
@@ -110,7 +110,7 @@ class TelegramBotTest extends TestCase
             true
         );
 
-        $this->bot->handleCommand('start', function (TelegramBotFake $bot) {
+        $this->bot->command('start', function (TelegramBotFake $bot) {
             $data = $bot->chat->message('Hello')->send();
 
             $this->assertEquals('Hello', $data['text']);

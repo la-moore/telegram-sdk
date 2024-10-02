@@ -20,7 +20,7 @@ use LaMoore\Tg\TelegramUpdate;
  * @param TelegramApi $api
  * @param TelegramUpdate $update
  * @param TelegramChat $chat
- * @method static void handleCommand(string $command, array|callable $callback)
+ * @method static void command(string $command, array|callable $callback)
  * @method static void on(UpdateTypes $event, array|callable $callback)
  * @method static mixed handle(array $request)
  */
