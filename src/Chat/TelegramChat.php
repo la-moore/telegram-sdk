@@ -9,6 +9,17 @@ use LaMoore\Tg\Resources\ChatResource;
 class TelegramChat extends ChatResource {
     public TelegramBot $bot;
 
+    public function editMessageKeyboard(int $message_id, MessageComposer $message): array
+    {
+        return $this->bot->api->editMessageReplyMarkup(array_merge(
+            $message->toArray(),
+            [
+                'chat_id' => $this->bot->update->getChat()->id,
+                'message_id' => $message_id
+            ]
+        ));
+    }
+
     public function message(string $text): TelegramChatMessage
     {
         return TelegramChatMessage::make()
