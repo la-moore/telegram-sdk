@@ -48,6 +48,7 @@ class BotCommands
 
     public function handleCommands(): void
     {
+        $this->bot->logger->log("Handle commands");
         $commands = $this->bot->update->getCommands();
 
         foreach ($commands as $command) {
@@ -58,6 +59,7 @@ class BotCommands
 
     public function handleCallbackQueryActions(): void
     {
+        $this->bot->logger->log("Handle callback query actions");
         $updateType = $this->bot->update->getType();
 
         if ($updateType === UpdateTypes::CallbackQuery) {
