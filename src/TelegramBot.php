@@ -50,8 +50,7 @@ class TelegramBot {
 
         $this->update = TelegramUpdate::create($update);
 
-        $this->chat = TelegramChat::make();
-        $this->chat->bot = $this;
+        $this->chat = new TelegramChat($this);
 
         $this->events->handleEvents();
         $this->commands->handleCommands();

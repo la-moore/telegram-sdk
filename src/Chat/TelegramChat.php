@@ -4,10 +4,13 @@ namespace LaMoore\Tg\Chat;
 
 use LaMoore\Tg\TelegramBot;
 use LaMoore\Tg\Composer\MessageComposer;
-use LaMoore\Tg\Resources\ChatResource;
 
-class TelegramChat extends ChatResource {
-    public ?TelegramBot $bot = null;
+class TelegramChat {
+    public TelegramBot $bot;
+
+    public function __construct(TelegramBot $bot) {
+        $this->bot = $bot;
+    }
 
     public function editMessageKeyboard(int $message_id, MessageComposer $message): array
     {
