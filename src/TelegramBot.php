@@ -57,6 +57,7 @@ class TelegramBot {
 
         $this->events->handleEvents();
         $this->commands->handleCommands();
+        $this->commands->handleCallbackQueryActions();
     }
 
 

@@ -53,7 +53,7 @@ class BotCommands
         }
     }
 
-    protected function handleCallbackQueryActions(): void
+    public function handleCallbackQueryActions(): void
     {
         $updateType = $this->bot->update->getType();
 
