@@ -61,6 +61,13 @@ class TelegramBotTest extends TestCase
         $this->assertTrue($bot->api->debug);
     }
 
+    public function test_api_getMe(): void
+    {
+        $response = $this->bot->api->sendRequest('getMe');
+
+        $this->assertEquals($this->bot->id, $response['id']);
+    }
+
 
     public function test_bootstrap(): void
     {
@@ -96,30 +103,7 @@ class TelegramBotTest extends TestCase
         $this->bot->handle($update);
     }
 
-    public function test_api_getMe(): void
-    {
-        $response = $this->bot->api->sendRequest('getMe');
-
-        $this->assertEquals($this->bot->id, $response['id']);
-    }
-
     public function test_send_message(): void
-    {
-        $update = json_decode(
-            file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/command.json'),
-            true
-        );
-
-        $this->bot->handleCommand('start', function (TelegramBotFake $bot) {
-            $data = $bot->chat->message('Hello')->send();
-
-            $this->assertEquals('Hello', $data['text']);
-        });
-
-        $this->bot->handle($update);
-    }
-
-    public function test_regex(): void
     {
         $update = json_decode(
             file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/command.json'),

@@ -45,7 +45,7 @@ class BotEvents
             $listeners = self::$listeners[$event->value];
 
             foreach ($listeners as $listener) {
-                $listener($this->bot->update, $parameter);
+                $listener($this->bot, $parameter);
             }
         }
     }

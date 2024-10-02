@@ -5,7 +5,7 @@ namespace LaMoore\Tg\Composer;
 use Illuminate\Support\Collection;
 
 class InlineKeyboardComposer extends BaseComposer {
-    private array $inline_keyboard = [];
+    protected array $inline_keyboard = [];
 
     /**
      * @param InlineKeyboardButtonComposer[] $row
@@ -18,27 +18,32 @@ class InlineKeyboardComposer extends BaseComposer {
 
     public function buttons (array $buttons): static {
         foreach ($buttons as $button) {
-            $this->inline_keyboard[] = [$button];
+            $this->row([$button]);
         }
 
         return $this;
     }
 
-    public function chunk (array $buttons, int $count = 1): static {
+    public function chunk (int $count = 1): static {
+        $buttons = array_merge(...$this->inline_keyboard);
         $rows = array_chunk($buttons, $count);
 
-        foreach ($rows as $row) {
-            $this->inline_keyboard[] = $row;
-        }
+        $this->inline_keyboard = $rows;
+
+        return $this;
+    }
+
+    public function paginate (int $page = 1, int $perPage = 10): static {
+        $this->inline_keyboard = array_slice($this->inline_keyboard, ($page - 1) * $perPage, $perPage);
 
         return $this;
     }
 
     public function eachButton (callable $cb): static {
-        foreach ($this->inline_keyboard as $row) {
-            foreach ($row as $button) {
-                $cb($button);
-            }
+        $buttons = array_merge(...$this->inline_keyboard);
+
+        foreach ($buttons as $index => $button) {
+            $cb($button, $index);
         }
 
         return $this;

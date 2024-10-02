@@ -49,7 +49,9 @@ class TelegramBot {
         $this->logger->log("Received update: " . json_encode($update, JSON_PRETTY_PRINT));
 
         $this->update = TelegramUpdate::create($update);
-        $this->chat = TelegramChat::create($this);
+
+        $this->chat = TelegramChat::make();
+        $this->chat->bot = $this;
 
         $this->events->handleEvents();
         $this->commands->handleCommands();
