@@ -118,4 +118,19 @@ class TelegramBotTest extends TestCase
 
         $this->bot->handle($update);
     }
+
+
+    public function test_callback_query(): void
+    {
+        $update = json_decode(
+            file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/callback_query.json'),
+            true
+        );
+
+        $this->bot->command('test', function () {
+            $this->assertTrue(true);
+        });
+
+        $this->bot->handle($update);
+    }
 }

@@ -55,7 +55,7 @@ class TelegramUpdate {
         foreach (UpdateTypes::cases() as $case) {
             $caseValue = $case->value;
 
-            if (isset($this->update->$caseValue)) {
+            if (isset($this->data->$caseValue)) {
                 return $case;
             }
         }
