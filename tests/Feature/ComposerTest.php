@@ -134,7 +134,7 @@ class ComposerTest extends TestCase
         $keyboard = InlineKeyboardLightPaginatorComposer::make()
             ->buttons($buttons)
             ->page(1)
-            ->pageParam('p')
+            ->page_param('p')
             ->count(100)
             ->command('test');
 
@@ -152,6 +152,10 @@ class ComposerTest extends TestCase
 
         $this->assertEquals('Back', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
         $this->assertEquals('test?p=9', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
+
+        $keyboard->extra_params([ 'msg' => 1 ]);
+
+        $this->assertEquals('test?msg=1&p=9', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
     }
 
     public function test_keyboard_paginator(): void
@@ -163,7 +167,7 @@ class ComposerTest extends TestCase
         $keyboard = InlineKeyboardPaginatorComposer::make()
             ->buttons($buttons)
             ->page(1)
-            ->pageParam('p')
+            ->page_param('p')
             ->count(100)
             ->command('test');
 

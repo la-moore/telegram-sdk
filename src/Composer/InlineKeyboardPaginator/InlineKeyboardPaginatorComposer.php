@@ -13,7 +13,8 @@ class InlineKeyboardPaginatorComposer extends InlineKeyboardLightPaginatorCompos
         'end' => '$d »',
     ];
 
-    private function formatString(string $str, int $page) {
+    private function formatString(string $str, int $page): string
+    {
         return str_replace('$d', $page, $str);
     }
 
@@ -33,9 +34,7 @@ class InlineKeyboardPaginatorComposer extends InlineKeyboardLightPaginatorCompos
         return array_map(function ($btn) {
             return InlineKeyboardButtonComposer::make()
                 ->text($this->formatString($btn['label'], $btn['page']))
-                ->command($this->command, [
-                    $this->page_param => $btn['page']
-                ]);
+                ->command($this->command, $this->getButtonParams($btn['page']));
         }, array_values($navigation));
     }
 }

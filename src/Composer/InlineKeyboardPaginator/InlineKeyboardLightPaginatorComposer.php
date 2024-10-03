@@ -12,6 +12,7 @@ class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
     protected int $items_count = 0;
     protected int $per_page = 10;
     protected string $page_param = 'page';
+    protected array $extra_params = [];
     protected array $labels = [
         'previous' => 'Previous page',
         'next' => 'Next page',
@@ -45,46 +46,51 @@ class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
         return $this;
     }
 
-    public function perPage(int $perPage): static
+    public function per_page(int $perPage): static
     {
         $this->per_page = $perPage;
 
         return $this;
     }
 
-    public function pageParam(string $param): static
+    public function page_param(string $param): static
     {
         $this->page_param = $param;
 
         return $this;
     }
 
+    public function extra_params(array $params): static
+    {
+        $this->extra_params = $params;
+
+        return $this;
+    }
+
+    protected function getButtonParams (int $page)
+    {
+        return array_merge(
+            $this->extra_params,
+            [$this->page_param => $page]
+        );
+    }
+
     protected function createNavigation(): array
     {
-        $navigation = [];
         $lastPage = ceil($this->items_count / $this->per_page);
 
-        if ($this->page > 1) {
-            $btn = InlineKeyboardButtonComposer::make()
-                ->text($this->labels['previous'])
-                ->command($this->command, [
-                    $this->page_param => $this->page - 1
-                ]);
+        $navigation = [
+            ['label' => $this->labels['previous'], 'page' => $this->page - 1, 'filter' => $this->page > 1],
+            ['label' => $this->labels['next'], 'page' => $this->page + 1, 'filter' => $this->page < $lastPage],
+        ];
 
-            $navigation[] = $btn;
-        }
+        $navigation = array_filter($navigation, fn ($btn) => $btn['filter']);
 
-        if ($this->page < $lastPage) {
-            $btn = InlineKeyboardButtonComposer::make()
-                ->text($this->labels['next'])
-                ->command($this->command, [
-                    $this->page_param => $this->page + 1
-                ]);
-
-            $navigation[] = $btn;
-        }
-
-        return $navigation;
+        return array_map(function ($btn) {
+            return InlineKeyboardButtonComposer::make()
+                ->text($btn['label'])
+                ->command($this->command, $this->getButtonParams($btn['page']));
+        }, array_values($navigation));
     }
 
     public function getParamsCollection(): Collection {
