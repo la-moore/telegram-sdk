@@ -120,7 +120,7 @@ class TelegramBotTest extends TestCase
     }
 
 
-    public function test_callback_query(): void
+    public function test_actions(): void
     {
         $update = json_decode(
             file_get_contents(__DIR__.'/..'.'/..'.'/storage/app/examples/callback_query.json'),

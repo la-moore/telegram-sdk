@@ -24,17 +24,20 @@ class InlineKeyboardComposer extends BaseComposer {
         return $this;
     }
 
-    public function chunk (int $count = 1): static {
-        $buttons = array_merge(...$this->inline_keyboard);
+    public function chunk (array $buttons, int $count = 1): static {
         $rows = array_chunk($buttons, $count);
 
-        $this->inline_keyboard = $rows;
+        foreach ($rows as $row) {
+            $this->row($row);
+        }
 
         return $this;
     }
 
-    public function paginate (int $page = 1, int $perPage = 10): static {
-        $this->inline_keyboard = array_slice($this->inline_keyboard, ($page - 1) * $perPage, $perPage);
+    public function paginate (array $buttons, int $page = 1, int $perPage = 10): static {
+        $buttons = array_slice($buttons, ($page - 1) * $perPage, $perPage);
+
+        $this->buttons($buttons);
 
         return $this;
     }
