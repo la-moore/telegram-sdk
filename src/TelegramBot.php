@@ -105,4 +105,14 @@ class TelegramBot {
     {
         return $this->chat;
     }
+
+    public function getCommands(): BotCommands
+    {
+        return $this->commands;
+    }
+
+    public function getEvents(): BotEvents
+    {
+        return $this->events;
+    }
 }
