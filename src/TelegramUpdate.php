@@ -14,10 +14,10 @@ use LaMoore\Tg\Resources\UpdateResource;
 class TelegramUpdate {
     public UpdateResource $data;
 
-    public static function create(array $update): static {
+    public static function create(array $data): static {
         $self = new static();
 
-        $self->data = UpdateResource::make($update);
+        $self->data = UpdateResource::make($data);
 
         return $self;
     }
@@ -45,13 +45,6 @@ class TelegramUpdate {
     }
 
     public function getType(): UpdateTypes {
-//        $commands = collect($this->getMessage()?->entities ?? [])
-//            ->filter(fn ($entity) => $entity->type === 'bot_command');
-//
-//        if (count($commands) > 0) {
-//            return UpdateTypes::Command;
-//        }
-
         foreach (UpdateTypes::cases() as $case) {
             $caseValue = $case->value;
 

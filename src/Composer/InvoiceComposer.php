@@ -2,11 +2,6 @@
 
 namespace LaMoore\Tg\Composer;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
-use LaMoore\Tg\Resources\BaseResource;
-use LaMoore\Tg\Resources\LinkPreviewOptionsResource;
-use LaMoore\Tg\Resources\MessageEntityResource;
 use LaMoore\Tg\Resources\ReplyParametersResource;
 
 class InvoiceComposer extends BaseComposer {
@@ -234,11 +229,11 @@ class InvoiceComposer extends BaseComposer {
     }
 
 
-    public function getParamsCollection(): Collection {
-        $data = collect(get_object_vars($this));
+    public function getParamsCollection(): array {
+        $data = get_object_vars($this);
 
         if ($this->prices) {
-            $prices = collect($this->prices)->map(fn ($price) => $price->toArray());
+            $prices = array_map(fn ($price) => $price->toArray(), $this->prices);
             $data['prices'] = json_encode($prices);
         }
 

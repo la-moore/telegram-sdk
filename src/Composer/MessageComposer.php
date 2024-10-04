@@ -2,9 +2,7 @@
 
 namespace LaMoore\Tg\Composer;
 
-use Illuminate\Support\Collection;
 use LaMoore\Tg\Resources\LinkPreviewOptionsResource;
-use LaMoore\Tg\Resources\MessageEntityResource;
 use LaMoore\Tg\Resources\ReplyParametersResource;
 
 class MessageComposer extends BaseComposer {
@@ -19,11 +17,6 @@ class MessageComposer extends BaseComposer {
     protected ?string $message_effect_id = null;
     protected ?ReplyParametersResource $reply_parameters = null;
     protected ?InlineKeyboardComposer $reply_markup = null;
-
-    /**
-     * @var ?Collection<mixed, MessageEntityResource> $entities
-     */
-    protected ?Collection $entities = null;
 
     public function chat_id(int $chat_id): static
     {

@@ -2,8 +2,6 @@
 
 namespace LaMoore\Tg\Composer;
 
-use Illuminate\Support\Collection;
-
 class InlineKeyboardComposer extends BaseComposer {
     protected array $inline_keyboard = [];
 
@@ -52,8 +50,8 @@ class InlineKeyboardComposer extends BaseComposer {
         return $this;
     }
 
-    public function getParamsCollection(): Collection {
-        $data = collect();
+    public function getParamsCollection(): array {
+        $data = [];
 
         $data['inline_keyboard'] = array_map(function ($row) {
             return array_map(fn ($item) => $item->toArray(), $row);

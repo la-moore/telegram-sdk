@@ -22,7 +22,9 @@ use LaMoore\Tg\TelegramUpdate;
  * @param TelegramChat $chat
  * @method static void command(string $command, array|callable $callback)
  * @method static void on(UpdateTypes $event, array|callable $callback)
- * @method static mixed handle(array $request)
+ * @method static void handle(array $request)
+ * @method static void init(array $request)
+ * @method static void run()
  */
 class TelegramBot extends Facade
 {

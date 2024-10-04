@@ -2,7 +2,6 @@
 
 namespace LaMoore\Tg\Composer\InlineKeyboardPaginator;
 
-use Illuminate\Support\Collection;
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 use LaMoore\Tg\Composer\InlineKeyboardComposer;
 
@@ -93,8 +92,8 @@ class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
         }, array_values($navigation));
     }
 
-    public function getParamsCollection(): Collection {
-        $data = collect();
+    public function getParamsCollection(): array {
+        $data = [];
 
         $inline_keyboard = array_merge(
             $this->inline_keyboard,

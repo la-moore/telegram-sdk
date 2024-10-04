@@ -3,7 +3,6 @@
 namespace LaMoore\Tg\Composer;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
 use LaMoore\Tg\Resources\BaseResource;
 
 class BaseComposer {
@@ -11,30 +10,31 @@ class BaseComposer {
         return new static();
     }
 
-    public function getParamsCollection(): Collection {
-        return collect(get_object_vars($this));
+    public function getParamsCollection(): array {
+        return get_object_vars($this);
     }
 
     public function toArray(): array
     {
-        return $this->getParamsCollection()
-            ->map(function (mixed $value) {
-                if ($value instanceof Arrayable) {
-                    return $value->toArray();
-                }
+        $params = $this->getParamsCollection();
 
-                if ($value instanceof BaseComposer) {
-                    return $value->toArray();
-                }
+        $params = array_map(function (mixed $value) {
+            if ($value instanceof Arrayable) {
+                return $value->toArray();
+            }
 
-                if ($value instanceof BaseResource) {
-                    return $value->toArray();
-                }
+            if ($value instanceof BaseComposer) {
+                return $value->toArray();
+            }
 
-                return $value;
-            })
-            ->whereNotNull()
-            ->toArray();
+            if ($value instanceof BaseResource) {
+                return $value->toArray();
+            }
+
+            return $value;
+        }, $params);
+
+        return array_filter($params);
     }
 
     public function toJson(): string

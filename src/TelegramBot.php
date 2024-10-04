@@ -10,8 +10,8 @@ use LaMoore\Tg\Logger\BotLogger;
 use LaMoore\Tg\Logger\LoggerInterface;
 
 class TelegramBot {
-    public string $token;
     public int $id;
+    public string $token;
     public array $config;
 
     public BotCommands $commands;
@@ -47,17 +47,26 @@ class TelegramBot {
         return $self;
     }
 
-    public function handle(array $update): void
+    public function init(array $update): void
     {
         $this->logger->log("Received update: " . json_encode($update, JSON_PRETTY_PRINT));
 
         $this->update = TelegramUpdate::create($update);
 
         $this->chat = new TelegramChat($this);
+    }
 
+    public function run(): void
+    {
         $this->events->handleEvents();
         $this->commands->handleCommands();
         $this->commands->handleCallbackQueryActions();
+    }
+
+    public function handle(array $update): void
+    {
+        $this->init($update);
+        $this->run();
     }
 
 
