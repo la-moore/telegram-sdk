@@ -79,4 +79,30 @@ class TelegramBot {
     {
         $this->events->on($event, $callback);
     }
+
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getApi(): TelegramApi
+    {
+        return $this->api;
+    }
+
+    public function getUpdate(): TelegramUpdate
+    {
+        return $this->update;
+    }
+
+    public function getChat(): ?TelegramChat
+    {
+        return $this->chat;
+    }
 }

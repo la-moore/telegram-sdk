@@ -12,19 +12,17 @@ use LaMoore\Tg\TelegramApi;
 use LaMoore\Tg\TelegramUpdate;
 
 /**
- * @param string $token
- * @param int $id
- * @param BotCommands $commands
- * @param BotEvents $events
- * @param BotLogger $logger
- * @param TelegramApi $api
- * @param TelegramUpdate $update
- * @param TelegramChat $chat
  * @method static void command(string $command, array|callable $callback)
  * @method static void on(UpdateTypes $event, array|callable $callback)
  * @method static void handle(array $request)
  * @method static void init(array $request)
  * @method static void run()
+ *
+ * @method static string getToken()
+ * @method static string getId()
+ * @method static TelegramApi getApi()
+ * @method static TelegramUpdate getUpdate()
+ * @method static TelegramChat|null getChat()
  */
 class TelegramBot extends Facade
 {
