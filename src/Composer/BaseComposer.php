@@ -27,10 +27,6 @@ class BaseComposer {
                 return $value->toArray();
             }
 
-            if ($value instanceof BaseResource) {
-                return $value->toArray();
-            }
-
             return $value;
         }, $params);
 

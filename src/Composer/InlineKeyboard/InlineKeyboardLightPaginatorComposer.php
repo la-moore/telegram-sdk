@@ -1,6 +1,6 @@
 <?php
 
-namespace LaMoore\Tg\Composer\InlineKeyboardPaginator;
+namespace LaMoore\Tg\Composer\InlineKeyboard;
 
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 use LaMoore\Tg\Composer\InlineKeyboardComposer;

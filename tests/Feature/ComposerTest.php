@@ -3,8 +3,9 @@
 namespace LaMoore\Tg\Tests\Feature;
 
 use LaMoore\Tg\Composer\MessageComposer;
-use LaMoore\Tg\Composer\InlineKeyboardPaginator\InlineKeyboardLightPaginatorComposer;
-use LaMoore\Tg\Composer\InlineKeyboardPaginator\InlineKeyboardPaginatorComposer;
+use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardLightPaginatorComposer;
+use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardPaginatorComposer;
+use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardTabsComposer;
 use LaMoore\Tg\Composer\InlineKeyboardComposer;
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 use LaMoore\Tg\Composer\InvoiceComposer;
@@ -207,5 +208,34 @@ class ComposerTest extends TestCase
         $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
         $this->assertEquals('test?p=9', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
         $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
+    }
+
+
+    public function test_keyboard_tabs(): void
+    {
+        $keyboard = InlineKeyboardTabsComposer::make()
+            ->tabs([
+                'First' => array_map(function ($i) {
+                    return InlineKeyboardButtonComposer::make()
+                        ->text($i)->command($i);
+                }, array_keys(array_fill(0, 2, null))),
+                'Second' => array_map(function ($i) {
+                    return InlineKeyboardButtonComposer::make()
+                        ->text($i)->command($i);
+                }, array_keys(array_fill(0, 3, null)))
+            ])
+            ->tab(0)
+            ->page_param('t')
+            ->command('test');
+
+        $this->assertCount(3, $keyboard->toArray()['inline_keyboard']);
+        $this->assertEquals('- First -', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
+        $this->assertEquals('test?t=0', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
+        $this->assertEquals('test?t=1', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
+
+        $keyboard->tab(1);
+
+        $this->assertCount(4, $keyboard->toArray()['inline_keyboard']);
+        $this->assertEquals('First', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
     }
 }
