@@ -69,7 +69,7 @@ class BotCommands
             $data = parse_url($this->bot->update->data->callback_query->data);
             $command = (string) Str::of($data['path'])->after('/');
 
-            parse_str($data['query'], $query);
+            parse_str($data['query'] ?? '', $query);
 
             $this->bot->logger->log("Handle callback query action: $command");
             $this->callCommand($command, $query);
