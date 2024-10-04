@@ -23,6 +23,9 @@ use LaMoore\Tg\TelegramUpdate;
  * @method static TelegramApi getApi()
  * @method static TelegramUpdate getUpdate()
  * @method static TelegramChat|null getChat()
+ * @method static BotCommands getCommands()
+ * @method static BotEvents getEvents()
+ * @method static BotLogger getLogger()
  */
 class TelegramBot extends Facade
 {

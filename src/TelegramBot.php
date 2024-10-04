@@ -115,4 +115,9 @@ class TelegramBot {
     {
         return $this->events;
     }
+
+    public function getLogger(): LoggerInterface
+    {
+        return $this->logger;
+    }
 }
