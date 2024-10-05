@@ -35,6 +35,7 @@ class BotCommands
 
         if (!$this->hasCommand($command)) {
             $this->bot->logger->log("Command: [$command] not found");
+            return null;
         }
 
         $this->bot->logger->log("Start command: $command");
