@@ -3,9 +3,9 @@
 namespace LaMoore\Tg\Tests\Feature;
 
 use LaMoore\Tg\Composer\MessageComposer;
-use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardLightPaginatorComposer;
-use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardPaginatorComposer;
-use LaMoore\Tg\Composer\InlineKeyboard\InlineKeyboardTabsComposer;
+use LaMoore\Tg\Composer\InlineKeyboardNavigation\InlineKeyboardLightPaginatorComposer;
+use LaMoore\Tg\Composer\InlineKeyboardNavigation\InlineKeyboardPaginatorComposer;
+use LaMoore\Tg\Composer\InlineKeyboardNavigation\InlineKeyboardTabsComposer;
 use LaMoore\Tg\Composer\InlineKeyboardComposer;
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
 use LaMoore\Tg\Composer\InvoiceComposer;

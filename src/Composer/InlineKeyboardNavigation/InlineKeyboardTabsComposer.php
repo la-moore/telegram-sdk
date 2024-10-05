@@ -1,26 +1,15 @@
 <?php
 
-namespace LaMoore\Tg\Composer\InlineKeyboard;
+namespace LaMoore\Tg\Composer\InlineKeyboardNavigation;
 
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
-use LaMoore\Tg\Composer\BaseComposer;
 use LaMoore\Tg\Helpers\StringHelper;
 
-class InlineKeyboardTabsComposer extends BaseComposer {
+class InlineKeyboardTabsComposer extends InlineKeyboardNavigationComposer {
     protected int $selected = 0;
-    protected string $command;
     protected string $selected_label = '- $label -';
     protected string $parameter = 'tab';
-    protected array $props = [];
     protected array $tabs = [];
-
-    public function command(string $command, array $data = []): static
-    {
-        $this->command = $command;
-        $this->props = $data;
-
-        return $this;
-    }
 
     public function tabs(array $tabs): static
     {
@@ -36,26 +25,11 @@ class InlineKeyboardTabsComposer extends BaseComposer {
         return $this;
     }
 
-    public function parameter(string $param): static
-    {
-        $this->parameter = $param;
-
-        return $this;
-    }
-
     public function selectedLabel(string $label): static
     {
         $this->selected_label = $label;
 
         return $this;
-    }
-
-    protected function getButtonParams (int $tab)
-    {
-        return array_merge(
-            $this->props,
-            [$this->parameter => $tab]
-        );
     }
 
     public function getParamsCollection(): array {

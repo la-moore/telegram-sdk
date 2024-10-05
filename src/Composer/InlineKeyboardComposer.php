@@ -2,11 +2,13 @@
 
 namespace LaMoore\Tg\Composer;
 
+use LaMoore\Tg\Composer\InlineKeyboardNavigation\InlineKeyboardNavigationComposer;
+
 class InlineKeyboardComposer extends BaseComposer {
     protected array $inline_keyboard = [];
 
     /**
-     * @param InlineKeyboardButtonComposer[] $row
+     * @param InlineKeyboardButtonComposer[]|InlineKeyboardNavigationComposer $row
      */
     public function row (array $row): static {
         $this->inline_keyboard[] = $row;
