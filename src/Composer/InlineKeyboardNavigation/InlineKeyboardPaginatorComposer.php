@@ -3,22 +3,18 @@
 namespace LaMoore\Tg\Composer\InlineKeyboardNavigation;
 
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
+use LaMoore\Tg\Helpers\StringHelper;
 
 class InlineKeyboardPaginatorComposer extends InlineKeyboardLightPaginatorComposer {
     protected array $labels = [
-        'start' => '« $d',
-        'previous' => '‹ $d',
-        'current' => '- $d -',
-        'next' => '$d ›',
-        'end' => '$d »',
+        'start' => '« $page',
+        'previous' => '‹ $page',
+        'current' => '- $page -',
+        'next' => '$page ›',
+        'end' => '$page »',
     ];
 
-    private function formatString(string $str, int $page): string
-    {
-        return str_replace('$d', $page, $str);
-    }
-
-    protected function createNavigation(): array
+    public function getParamsCollection(): array
     {
         $lastPage = ceil($this->items_count / $this->per_page);
         $navigation = [
@@ -33,7 +29,7 @@ class InlineKeyboardPaginatorComposer extends InlineKeyboardLightPaginatorCompos
 
         return array_map(function ($btn) {
             return InlineKeyboardButtonComposer::make()
-                ->text($this->formatString($btn['label'], $btn['page']))
+                ->text(StringHelper::replace($btn['label'], ['page' => $btn['page']]))
                 ->command($this->command, $this->getButtonParams($btn['page']));
         }, array_values($navigation));
     }

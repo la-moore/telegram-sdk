@@ -126,92 +126,82 @@ class ComposerTest extends TestCase
     }
 
 
-    public function test_keyboard_light_paginator(): void
+    public function test_keyboard_navigation_light_paginator(): void
     {
-        $buttons = array_map(function ($i) {
-            return InlineKeyboardButtonComposer::make()
-                ->text($i)->command($i);
-        }, array_keys(array_fill(0, 2, null)));
         $keyboard = InlineKeyboardLightPaginatorComposer::make()
-            ->buttons($buttons)
             ->page(1)
-            ->page_param('p')
+            ->parameter('p')
             ->count(100)
             ->command('test');
 
-        $this->assertCount(1, end($keyboard->toArray()['inline_keyboard']));
+        $this->assertCount(1, $keyboard->toArray());
 
         $keyboard->page(5);
 
-        $this->assertCount(2, end($keyboard->toArray()['inline_keyboard']));
+        $this->assertCount(2, $keyboard->toArray());
 
         $keyboard->page(10);
 
-        $this->assertCount(1, end($keyboard->toArray()['inline_keyboard']));
+        $this->assertCount(1, $keyboard->toArray());
 
         $keyboard->labels([ 'previous' => 'Back' ]);
 
-        $this->assertEquals('Back', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
-        $this->assertEquals('test?p=9', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
+        $this->assertEquals('Back', $keyboard->toArray()[0]['text']);
+        $this->assertEquals('test?p=9', $keyboard->toArray()[0]['callback_data']);
 
-        $keyboard->extra_params([ 'msg' => 1 ]);
+        $keyboard->command('test', [ 'msg' => 1 ]);
 
-        $this->assertEquals('test?msg=1&p=9', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
+        $this->assertEquals('test?msg=1&p=9', $keyboard->toArray()[0]['callback_data']);
     }
 
-    public function test_keyboard_paginator(): void
+    public function test_keyboard_navigation_paginator(): void
     {
-        $buttons = array_map(function ($i) {
-            return InlineKeyboardButtonComposer::make()
-                ->text($i)->command($i);
-        }, array_keys(array_fill(0, 2, null)));
         $keyboard = InlineKeyboardPaginatorComposer::make()
-            ->buttons($buttons)
             ->page(1)
-            ->page_param('p')
+            ->parameter('p')
             ->count(100)
             ->command('test');
 
-        $this->assertCount(3, end($keyboard->toArray()['inline_keyboard']));
-        $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?p=2', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
-        $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
+        $this->assertCount(3, $keyboard->toArray());
+        $this->assertEquals('test?p=1', $keyboard->toArray()[0]['callback_data']);
+        $this->assertEquals('test?p=2', $keyboard->toArray()[1]['callback_data']);
+        $this->assertEquals('test?p=10', $keyboard->toArray()[2]['callback_data']);
 
         $keyboard->page(2);
 
-        $this->assertCount(4, end($keyboard->toArray()['inline_keyboard']));
-        $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?p=2', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
-        $this->assertEquals('test?p=3', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
-        $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[3]['callback_data']);
+        $this->assertCount(4, $keyboard->toArray());
+        $this->assertEquals('test?p=1', $keyboard->toArray()[0]['callback_data']);
+        $this->assertEquals('test?p=2', $keyboard->toArray()[1]['callback_data']);
+        $this->assertEquals('test?p=3', $keyboard->toArray()[2]['callback_data']);
+        $this->assertEquals('test?p=10', $keyboard->toArray()[3]['callback_data']);
 
         $keyboard->page(5);
 
-        $this->assertCount(5, end($keyboard->toArray()['inline_keyboard']));
-        $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?p=4', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
-        $this->assertEquals('test?p=5', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
-        $this->assertEquals('test?p=6', end($keyboard->toArray()['inline_keyboard'])[3]['callback_data']);
-        $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[4]['callback_data']);
+        $this->assertCount(5, $keyboard->toArray());
+        $this->assertEquals('test?p=1', $keyboard->toArray()[0]['callback_data']);
+        $this->assertEquals('test?p=4', $keyboard->toArray()[1]['callback_data']);
+        $this->assertEquals('test?p=5', $keyboard->toArray()[2]['callback_data']);
+        $this->assertEquals('test?p=6', $keyboard->toArray()[3]['callback_data']);
+        $this->assertEquals('test?p=10', $keyboard->toArray()[4]['callback_data']);
 
         $keyboard->page(9);
 
-        $this->assertCount(4, end($keyboard->toArray()['inline_keyboard']));
-        $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?p=8', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
-        $this->assertEquals('test?p=9', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
-        $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[3]['callback_data']);
+        $this->assertCount(4, $keyboard->toArray());
+        $this->assertEquals('test?p=1', $keyboard->toArray()[0]['callback_data']);
+        $this->assertEquals('test?p=8', $keyboard->toArray()[1]['callback_data']);
+        $this->assertEquals('test?p=9', $keyboard->toArray()[2]['callback_data']);
+        $this->assertEquals('test?p=10', $keyboard->toArray()[3]['callback_data']);
 
         $keyboard->page(10);
 
-        $this->assertCount(3, end($keyboard->toArray()['inline_keyboard']));
-        $this->assertEquals('test?p=1', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?p=9', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
-        $this->assertEquals('test?p=10', end($keyboard->toArray()['inline_keyboard'])[2]['callback_data']);
+        $this->assertCount(3, $keyboard->toArray());
+        $this->assertEquals('test?p=1', $keyboard->toArray()[0]['callback_data']);
+        $this->assertEquals('test?p=9', $keyboard->toArray()[1]['callback_data']);
+        $this->assertEquals('test?p=10', $keyboard->toArray()[2]['callback_data']);
     }
 
 
-    public function test_keyboard_tabs(): void
+    public function test_keyboard_navigation_tabs(): void
     {
         $keyboard = InlineKeyboardTabsComposer::make()
             ->tabs(['First', 'Second', 'Third'])

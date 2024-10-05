@@ -3,26 +3,16 @@
 namespace LaMoore\Tg\Composer\InlineKeyboardNavigation;
 
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
-use LaMoore\Tg\Composer\InlineKeyboardComposer;
 
-class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
-    protected string $command;
+class InlineKeyboardLightPaginatorComposer extends InlineKeyboardNavigationComposer {
     protected int $page;
     protected int $items_count = 0;
     protected int $per_page = 10;
-    protected string $page_param = 'page';
-    protected array $extra_params = [];
+    protected string $parameter = 'page';
     protected array $labels = [
         'previous' => 'Previous page',
         'next' => 'Next page',
     ];
-
-    public function command(string $command): static
-    {
-        $this->command = $command;
-
-        return $this;
-    }
 
     public function labels(array $labels): static
     {
@@ -52,30 +42,7 @@ class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
         return $this;
     }
 
-    public function page_param(string $param): static
-    {
-        $this->page_param = $param;
-
-        return $this;
-    }
-
-    public function extra_params(array $params): static
-    {
-        $this->extra_params = $params;
-
-        return $this;
-    }
-
-    protected function getButtonParams (int $page)
-    {
-        return array_merge(
-            $this->extra_params,
-            [$this->page_param => $page]
-        );
-    }
-
-    protected function createNavigation(): array
-    {
+    public function getParamsCollection(): array {
         $lastPage = ceil($this->items_count / $this->per_page);
 
         $navigation = [
@@ -90,20 +57,5 @@ class InlineKeyboardLightPaginatorComposer extends InlineKeyboardComposer {
                 ->text($btn['label'])
                 ->command($this->command, $this->getButtonParams($btn['page']));
         }, array_values($navigation));
-    }
-
-    public function getParamsCollection(): array {
-        $data = [];
-
-        $inline_keyboard = array_merge(
-            $this->inline_keyboard,
-            [$this->createNavigation()]
-        );
-
-        $data['inline_keyboard'] = array_map(function ($row) {
-            return array_map(fn ($item) => $item->toArray(), $row);
-        }, $inline_keyboard);
-
-        return $data;
     }
 }
