@@ -214,28 +214,19 @@ class ComposerTest extends TestCase
     public function test_keyboard_tabs(): void
     {
         $keyboard = InlineKeyboardTabsComposer::make()
-            ->tabs([
-                'First' => array_map(function ($i) {
-                    return InlineKeyboardButtonComposer::make()
-                        ->text($i)->command($i);
-                }, array_keys(array_fill(0, 2, null))),
-                'Second' => array_map(function ($i) {
-                    return InlineKeyboardButtonComposer::make()
-                        ->text($i)->command($i);
-                }, array_keys(array_fill(0, 3, null)))
-            ])
-            ->tab(0)
-            ->page_param('t')
-            ->command('test');
+            ->tabs(['First', 'Second', 'Third'])
+            ->selected(0)
+            ->parameter('t')
+            ->selectedLabel('> $label <')
+            ->command('test', ['msg' => 1]);
 
-        $this->assertCount(3, $keyboard->toArray()['inline_keyboard']);
-        $this->assertEquals('- First -', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
-        $this->assertEquals('test?t=0', end($keyboard->toArray()['inline_keyboard'])[0]['callback_data']);
-        $this->assertEquals('test?t=1', end($keyboard->toArray()['inline_keyboard'])[1]['callback_data']);
+        $this->assertCount(3, $keyboard->toArray());
+        $this->assertEquals('> First <', $keyboard->toArray()[0]['text']);
 
-        $keyboard->tab(1);
+        $keyboard->selected(1);
 
-        $this->assertCount(4, $keyboard->toArray()['inline_keyboard']);
-        $this->assertEquals('First', end($keyboard->toArray()['inline_keyboard'])[0]['text']);
+        $this->assertCount(3, $keyboard->toArray());
+        $this->assertEquals('First', $keyboard->toArray()[0]['text']);
+        $this->assertEquals('> Second <', $keyboard->toArray()[1]['text']);
     }
 }

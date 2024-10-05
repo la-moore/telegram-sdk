@@ -3,24 +3,21 @@
 namespace LaMoore\Tg\Composer\InlineKeyboard;
 
 use LaMoore\Tg\Composer\InlineKeyboardButtonComposer;
-use LaMoore\Tg\Composer\InlineKeyboardComposer;
+use LaMoore\Tg\Composer\BaseComposer;
+use LaMoore\Tg\Helpers\StringHelper;
 
-class InlineKeyboardTabsComposer extends InlineKeyboardComposer {
+class InlineKeyboardTabsComposer extends BaseComposer {
+    protected int $selected = 0;
     protected string $command;
-    protected int $tab = 0;
-    protected string $selected_label = '- $t -';
-    protected string $page_param = 'tab';
-    protected array $extra_params = [];
+    protected string $selected_label = '- $label -';
+    protected string $parameter = 'tab';
+    protected array $props = [];
     protected array $tabs = [];
 
-    private function formatString(string $str, string $tab): string
-    {
-        return str_replace('$t', $tab, $str);
-    }
-
-    public function command(string $command): static
+    public function command(string $command, array $data = []): static
     {
         $this->command = $command;
+        $this->props = $data;
 
         return $this;
     }
@@ -32,23 +29,23 @@ class InlineKeyboardTabsComposer extends InlineKeyboardComposer {
         return $this;
     }
 
-    public function tab(int $tab): static
+    public function selected(int $selected): static
     {
-        $this->tab = $tab;
+        $this->selected = $selected;
 
         return $this;
     }
 
-    public function page_param(string $param): static
+    public function parameter(string $param): static
     {
-        $this->page_param = $param;
+        $this->parameter = $param;
 
         return $this;
     }
 
-    public function extra_params(array $params): static
+    public function selectedLabel(string $label): static
     {
-        $this->extra_params = $params;
+        $this->selected_label = $label;
 
         return $this;
     }
@@ -56,42 +53,19 @@ class InlineKeyboardTabsComposer extends InlineKeyboardComposer {
     protected function getButtonParams (int $tab)
     {
         return array_merge(
-            $this->extra_params,
-            [$this->page_param => $tab]
+            $this->props,
+            [$this->parameter => $tab]
         );
-    }
-
-    protected function createButtons(): array
-    {
-        $buttons = array_values($this->tabs)[$this->tab];
-
-        return array_map(fn ($item) => [$item], $buttons);
-    }
-
-    protected function createNavigation(): array
-    {
-        $labels = array_keys($this->tabs);
-
-        return array_map(function ($label, $key) {
-            $isSelected = $this->tab === $key;
-            return InlineKeyboardButtonComposer::make()
-                ->text($isSelected ? $this->formatString($this->selected_label, $label) : $label)
-                ->command($this->command, $this->getButtonParams($key));
-        }, $labels, array_keys($labels));
     }
 
     public function getParamsCollection(): array {
-        $data = [];
+        return array_map(function ($label, $key) {
+            $isSelected = $this->selected === $key;
+            $selectedLabel = StringHelper::replace($this->selected_label, ['label' => $label]);
 
-        $inline_keyboard = array_merge(
-            $this->createButtons(),
-            [$this->createNavigation()]
-        );
-
-        $data['inline_keyboard'] = array_map(function ($row) {
-            return array_map(fn ($item) => $item->toArray(), $row);
-        }, $inline_keyboard);
-
-        return $data;
+            return InlineKeyboardButtonComposer::make()
+                ->text($isSelected ? $selectedLabel : $label)
+                ->command($this->command, $this->getButtonParams($key));
+        }, array_values($this->tabs), array_keys($this->tabs));
     }
 }
