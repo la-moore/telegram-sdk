@@ -2,7 +2,6 @@
 
 namespace LaMoore\Tg\BotModules;
 
-use Exception;
 use Illuminate\Support\Str;
 use LaMoore\Tg\TelegramBot;
 use LaMoore\Tg\Enums\UpdateTypes;
@@ -36,7 +35,6 @@ class BotCommands
 
         if (!$this->hasCommand($command)) {
             $this->bot->logger->log("Command: [$command] not found");
-            throw new Exception("Command not found [$command]");
         }
 
         $this->bot->logger->log("Start command: $command");
