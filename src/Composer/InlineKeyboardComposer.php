@@ -10,7 +10,7 @@ class InlineKeyboardComposer extends BaseComposer {
     /**
      * @param InlineKeyboardButtonComposer[]|InlineKeyboardNavigationComposer $row
      */
-    public function row (array $row): static {
+    public function row (array|InlineKeyboardNavigationComposer $row): static {
         $this->inline_keyboard[] = $row;
 
         return $this;
@@ -56,7 +56,11 @@ class InlineKeyboardComposer extends BaseComposer {
         $data = [];
 
         $data['inline_keyboard'] = array_map(function ($row) {
-            return array_map(fn ($item) => $item->toArray(), $row);
+            if (is_array($row)) {
+                return array_map(fn($item) => $item->toArray(), $row);
+            }
+
+            return $row->toArray();
         }, $this->inline_keyboard);
 
         return $data;
