@@ -23,6 +23,17 @@ class TelegramChat {
         ));
     }
 
+    public function editMessage(int $message_id, MessageComposer $message): array
+    {
+        return $this->bot->api->editMessageText(array_merge(
+            $message->toArray(),
+            [
+                'chat_id' => $this->bot->update->getChat()->id,
+                'message_id' => $message_id
+            ]
+        ));
+    }
+
     public function message(string $text): TelegramChatMessage
     {
         return TelegramChatMessage::make()
