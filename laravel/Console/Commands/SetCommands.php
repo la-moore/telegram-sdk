@@ -29,10 +29,10 @@ class SetCommands extends Command
         $commands = config('telegram.commands', []);
 
         $data = TelegramApi::setMyCommands([
-            'commands' => json_encode(array_map( fn ($description, $command) => [
+            'commands' => json_encode(array_map( fn ($command, $description) => [
                 'command' => $command,
                 'description' => $description
-            ], $commands)),
+            ], array_keys($commands), array_values($commands))),
         ]);
 
         $this->info(json_encode($data));
