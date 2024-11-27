@@ -3,10 +3,7 @@
 namespace LaMoore\Tg\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use LaMoore\Tg\Laravel\Console\Commands\GetWebhookInfo;
-use LaMoore\Tg\Laravel\Console\Commands\SetCommands;
-use LaMoore\Tg\Laravel\Console\Commands\SetMenuButton;
-use LaMoore\Tg\Laravel\Console\Commands\SetWebhook;
+use LaMoore\Tg\Laravel\Console\Commands;
 use LaMoore\Tg\Laravel\Facades\TelegramApi as TelegramApiFacade;
 use LaMoore\Tg\Laravel\Facades\TelegramBot as TelegramBotFacade;
 use LaMoore\Tg\Laravel\Logger\LaravelBotLogger;
@@ -19,10 +16,11 @@ class TelegramServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                SetWebhook::class,
-                GetWebhookInfo::class,
-                SetCommands::class,
-                SetMenuButton::class,
+                Commands\SetWebhook::class,
+                Commands\GetWebhookInfo::class,
+                Commands\SetCommands::class,
+                Commands\SetMenuButton::class,
+                Commands\GetMe::class,
             ]);
         }
     }
