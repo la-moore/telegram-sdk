@@ -41,7 +41,7 @@ class TelegramBot {
         ]);
 
         $logger = $config['logger'] ?? BotLogger::class;
-        $self->logger = new $logger($self);
+        $self->logger = new $logger($self, $config['debug'] ?? false);
         $self->logger->log("Bot $self->id initialized");
 
         return $self;
