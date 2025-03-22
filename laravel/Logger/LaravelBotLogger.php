@@ -9,7 +9,7 @@ class LaravelBotLogger extends BotLogger
 {
     public function log(string $message): void
     {
-        if ($this->bot->config['debug'] ?? false) {
+        if ($this->enabled) {
             Log::debug($message);
         }
     }
